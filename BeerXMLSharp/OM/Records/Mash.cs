@@ -40,6 +40,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Mash()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Mash"/> class.
         /// </summary>

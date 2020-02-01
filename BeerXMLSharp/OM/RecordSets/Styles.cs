@@ -15,15 +15,16 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Styles"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Styles(IList<IBeerXmlEntity> children) : base(children)
+        public Styles(IList<IBeerXMLEntity> children) : base(children)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Styles"/> class.
         /// </summary>
-        public Styles() : base()
+        public Styles() 
         {
+
         }
     }
 }

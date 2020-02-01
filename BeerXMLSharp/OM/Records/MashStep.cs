@@ -48,6 +48,11 @@ namespace BeerXMLSharp.OM.Records
             }
         }
 
+        internal MashStep()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MashStep"/> class.
         /// </summary>

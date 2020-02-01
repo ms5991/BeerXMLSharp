@@ -57,6 +57,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Yeast()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Yeast"/> class.
         /// </summary>

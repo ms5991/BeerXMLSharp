@@ -8,7 +8,7 @@ namespace BeerXMLSharp.OM
     /// <summary>
     /// Represents a BeerXML Record such as HOP, FERMENTABLE, etc.
     /// </summary>
-    public interface IRecord : IBeerXmlEntity
+    public interface IRecord : IBeerXMLEntity
     {
         /// <summary>
         /// Every record has a name

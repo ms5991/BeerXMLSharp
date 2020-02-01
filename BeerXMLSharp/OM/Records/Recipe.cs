@@ -142,6 +142,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Recipe()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Recipe"/> class.
         /// </summary>

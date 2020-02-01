@@ -69,6 +69,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Style()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Style"/> class.
         /// </summary>

@@ -10,11 +10,9 @@ namespace BeerXMLSharp.OM
     /// <summary>
     /// Base class for all BeerXML entities
     /// </summary>
-    /// <seealso cref="BeerXMLSharp.OM.IBeerXmlEntity" />
-    public abstract class BeerXMLEntityBase : IBeerXmlEntity
+    /// <seealso cref="BeerXMLSharp.OM.IBeerXMLEntity" />
+    public abstract class BeerXMLEntityBase : IBeerXMLEntity
     {
-        private IBeerXMLSerializer _serializer = null;
-
         /// <summary>
         /// Serializer used to serialize this instance to BeerXML
         /// </summary>
@@ -22,16 +20,11 @@ namespace BeerXMLSharp.OM
         {
             get
             {
-                if (_serializer == null)
-                {
-                    _serializer = new XDocumentBeerXMLSerializer();
-                }
-
-                return _serializer;
+                return BeerXML.Serializer;
             }
             set
             {
-                _serializer = value;
+                BeerXML.Serializer = value;
             }
         }
 

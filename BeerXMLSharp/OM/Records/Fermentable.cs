@@ -56,6 +56,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Fermentable()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Fermentable"/> class.
         /// </summary>

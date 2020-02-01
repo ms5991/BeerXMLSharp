@@ -8,7 +8,7 @@ namespace BeerXMLSharp.OM
     /// <summary>
     /// Beer XML entity
     /// </summary>
-    public interface IBeerXmlEntity
+    public interface IBeerXMLEntity
     {
         /// <summary>
         /// Tag used in BeerXML

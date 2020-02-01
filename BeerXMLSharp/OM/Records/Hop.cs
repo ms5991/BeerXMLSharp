@@ -60,6 +60,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Hop() 
+        {
+
+        }
+
         public Hop(
             string name, 
             double alpha, 
