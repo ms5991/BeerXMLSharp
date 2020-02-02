@@ -125,7 +125,7 @@ namespace BeerXMLSharp.Serialization
         #region Public methods
 
         /// <summary>
-        /// Serializes the given IBeerXmlEntity object
+        /// Serializes the given IBeerXMLEntity object
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -242,7 +242,7 @@ namespace BeerXMLSharp.Serialization
         #region Serialization helpers
 
         /// <summary>
-        /// Creates an XDocument from the given IBeerXmlEntity
+        /// Creates an XDocument from the given IBeerXMLEntity
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -256,7 +256,7 @@ namespace BeerXMLSharp.Serialization
         }
 
         /// <summary>
-        /// Creates an XElement from the given IBeerXmlEntity
+        /// Creates an XElement from the given IBeerXMLEntity
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
