@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
     /// <seealso cref="BeerXMLSharp.OM.IRecordSet" />
     public abstract class BeerXMLRecordSetBase<T> : BeerXMLEntityBase, IRecordSet
     {
-        private IList<IBeerXmlEntity> _children { get; set; } = null;
+        private IList<IBeerXMLEntity> _children { get; set; } = null;
 
         /// <summary>
         /// Number of items in this set
@@ -33,14 +33,14 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         internal BeerXMLRecordSetBase() : base()
         {
-            this._children = new List<IBeerXmlEntity>();
+            this._children = new List<IBeerXMLEntity>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BeerXMLRecordSetBase{T}"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        internal BeerXMLRecordSetBase(IList<IBeerXmlEntity> children)
+        internal BeerXMLRecordSetBase(IList<IBeerXMLEntity> children)
         {
             this._children = children;
         }
@@ -53,7 +53,7 @@ namespace BeerXMLSharp.OM.RecordSets
         public override bool IsValid(ref ValidationCode errorCode)
         {
             bool result = true;
-            foreach (IBeerXmlEntity child in _children)
+            foreach (IBeerXMLEntity child in _children)
             {
                 result &= child.IsValid(ref errorCode);
             }
@@ -66,7 +66,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         /// <param name="child">Child record to add</param>
         /// <exception cref="ArgumentException"></exception>
-        public void Add(IBeerXmlEntity child)
+        public void Add(IBeerXMLEntity child)
         {
             if (child.GetType() != typeof(T))
             {
@@ -85,7 +85,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Removes a record from this set
         /// </summary>
         /// <param name="child">Child record to remove</param>
-        public void Remove(IBeerXmlEntity child)
+        public void Remove(IBeerXMLEntity child)
         {
             this._children.Remove(child);
         }
@@ -96,7 +96,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns>
         /// An enumerator that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<IBeerXmlEntity> GetEnumerator()
+        public IEnumerator<IBeerXMLEntity> GetEnumerator()
         {
             return _children.GetEnumerator();
         }

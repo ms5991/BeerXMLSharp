@@ -39,6 +39,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Water()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Water"/> class.
         /// </summary>

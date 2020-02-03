@@ -22,7 +22,7 @@ namespace BeerXMLSharp.OM.Records
         public HopUse Use { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int Time { get; set; }
+        public double Time { get; set; }
 
         #endregion
 
@@ -59,6 +59,11 @@ namespace BeerXMLSharp.OM.Records
         public double? Myrcene { get; set; }
 
         #endregion
+
+        internal Hop() 
+        {
+
+        }
 
         public Hop(
             string name, 

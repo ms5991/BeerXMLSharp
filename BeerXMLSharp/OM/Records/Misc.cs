@@ -33,6 +33,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Misc()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Misc"/> class.
         /// </summary>

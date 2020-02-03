@@ -10,11 +10,9 @@ namespace BeerXMLSharp.OM
     /// <summary>
     /// Base class for all BeerXML entities
     /// </summary>
-    /// <seealso cref="BeerXMLSharp.OM.IBeerXmlEntity" />
-    public abstract class BeerXMLEntityBase : IBeerXmlEntity
+    /// <seealso cref="BeerXMLSharp.OM.IBeerXMLEntity" />
+    public abstract class BeerXMLEntityBase : IBeerXMLEntity
     {
-        private IBeerXMLSerializer _serializer = null;
-
         /// <summary>
         /// Serializer used to serialize this instance to BeerXML
         /// </summary>
@@ -22,27 +20,11 @@ namespace BeerXMLSharp.OM
         {
             get
             {
-                if (_serializer == null)
-                {
-                    _serializer = new XDocumentBeerXMLSerializer();
-                }
-
-                return _serializer;
+                return BeerXML.Serializer;
             }
             set
             {
-                _serializer = value;
-            }
-        }
-
-        /// <summary>
-        /// Tag used in BeerXML
-        /// </summary>
-        public virtual string TagName
-        {
-            get
-            {
-                return this.GetType().Name.ToUpperInvariant();
+                BeerXML.Serializer = value;
             }
         }
 
@@ -80,7 +62,7 @@ namespace BeerXMLSharp.OM
                 return this.Serializer.Serialize(this);
             }
 
-            throw new BeerXMLInvalidObjectException(string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()), code);
+            throw new BeerXMLInvalidObjectException(code, string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()));
         }
 
         /// <summary>
@@ -91,7 +73,7 @@ namespace BeerXMLSharp.OM
         /// </returns>
         public override string ToString()
         {
-            return this.TagName;
+            return this.GetType().Name.ToUpperInvariant();
         }
     }
 }

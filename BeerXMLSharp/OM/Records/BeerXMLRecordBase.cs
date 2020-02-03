@@ -51,6 +51,15 @@ namespace BeerXMLSharp.OM.Records
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BeerXMLRecordBase"/> class. Allows for 
+        /// deserialization.
+        /// </summary>
+        internal BeerXMLRecordBase()
+        {
+
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BeerXMLRecordBase"/> class.
         /// </summary>
         /// <param name="name">The name.</param>

@@ -19,5 +19,18 @@ namespace BeerXMLSharp.Utilities
         {
             return Math.Abs(firstValue - secondValue) <= epsilon;
         }
+
+        /// <summary>
+        /// Determines whether this type is int32.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified type is int32; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsInt32(this Type type)
+        {
+            return Type.GetTypeCode(type) == TypeCode.Int32;
+        }
+
     }
 }

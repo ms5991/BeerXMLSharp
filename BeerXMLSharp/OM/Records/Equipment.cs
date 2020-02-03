@@ -68,7 +68,7 @@ namespace BeerXMLSharp.OM.Records
         public double? Boil_Time { get; set; }
 
         [BeerXMLInclude()]
-        public bool? Calc_Boil_Volume { get; }
+        public bool? Calc_Boil_Volume { get; internal set; }
 
         [BeerXMLInclude()]
         public double? Lauter_Deadspace { get; set; }
@@ -80,6 +80,11 @@ namespace BeerXMLSharp.OM.Records
         public bool? Hop_Utilization { get; set; }
 
         #endregion
+
+        internal Equipment() : base()
+        {
+
+        }
 
         /// <summary>
         /// Initializes an Equipment with the given parameters, including boilSize

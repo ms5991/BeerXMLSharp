@@ -16,14 +16,14 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Recipes"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Recipes(IList<IBeerXmlEntity> children) : base(children)
+        public Recipes(IList<IBeerXMLEntity> children) : base(children)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Recipes"/> class.
         /// </summary>
-        public Recipes() : base()
+        public Recipes()
         {
         }
     }

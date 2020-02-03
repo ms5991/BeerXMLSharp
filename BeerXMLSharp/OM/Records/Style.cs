@@ -31,16 +31,16 @@ namespace BeerXMLSharp.OM.Records
         public double OG_Min { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int IBU_Min { get; set; }
+        public double IBU_Min { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int IBU_Max { get; set; }
+        public double IBU_Max { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int Color_Min { get; set; }
+        public double Color_Min { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int Color_Max { get; set; }
+        public double Color_Max { get; set; }
 
         #endregion
 
@@ -69,6 +69,11 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        internal Style()
+        {
+
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Style"/> class.
         /// </summary>
@@ -93,10 +98,10 @@ namespace BeerXMLSharp.OM.Records
             StyleType type,
             double ogMax,
             double ogMin,
-            int ibuMin,
-            int ibuMax,
-            int colorMin,
-            int colorMax,
+            double ibuMin,
+            double ibuMax,
+            double colorMin,
+            double colorMax,
             string name, 
             int version = Constants.DEFAULT_BEER_XML_VERSION) : base(name, version)
         {

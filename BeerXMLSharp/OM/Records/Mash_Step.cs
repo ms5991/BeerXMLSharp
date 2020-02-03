@@ -5,7 +5,8 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    public sealed class MashStep : BeerXMLRecordBase
+    [Serializable]
+    public sealed class Mash_Step : BeerXMLRecordBase
     {
         #region Required
 
@@ -38,25 +39,14 @@ namespace BeerXMLSharp.OM.Records
         #endregion
 
         /// <summary>
-        /// Tag used in BeerXML. Override for this type to include underscore
-        /// </summary>
-        public override string TagName
-        {
-            get
-            {
-                return "Mash_Step".ToUpperInvariant();
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MashStep"/> class.
+        /// Initializes a new instance of the <see cref="Mash_Step"/> class.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="stepTemp">The step temporary.</param>
         /// <param name="stepTime">The step time.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public MashStep(
+        public Mash_Step(
             MashStepType type,
             double stepTemp,
             double stepTime,
@@ -71,6 +61,7 @@ namespace BeerXMLSharp.OM.Records
             this.Step_Time = stepTime;
         }
 
+        internal Mash_Step() { }
 
         /// <summary>
         /// Returns a bool indicating if this instance's conditional properties will produce valid BeerXML.

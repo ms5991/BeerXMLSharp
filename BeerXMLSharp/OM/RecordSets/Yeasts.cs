@@ -15,14 +15,14 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Yeasts"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Yeasts(IList<IBeerXmlEntity> children) : base(children)
+        public Yeasts(IList<IBeerXMLEntity> children) : base(children)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Yeasts"/> class.
         /// </summary>
-        public Yeasts() : base()
+        public Yeasts()
         {
         }
     }
