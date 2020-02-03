@@ -75,10 +75,6 @@ namespace BeerXMLSharp.ConsoleDisplay
         public static void Main(string[] args)
         {
             Deserialize();
-            string t = "1.0";
-            int i;
-
-            Console.WriteLine(Convert.ChangeType(Convert.ChangeType(t, typeof(double)), typeof(int)));
         }
     }
 }
