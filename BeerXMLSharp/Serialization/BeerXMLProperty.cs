@@ -87,10 +87,16 @@ namespace BeerXMLSharp.Serialization
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static Type GetTypeByName(string name)
+        public static Type TryGetTypeByName(string name)
         {
             EnsurePropertyMappings();
-            return _typeNameToTypeMap[name];
+
+            if (_typeNameToTypeMap.TryGetValue(name, out Type type))
+            {
+                return type;
+            }
+
+            return null;
         }
 
         /// <summary>

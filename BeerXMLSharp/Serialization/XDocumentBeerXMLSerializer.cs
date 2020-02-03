@@ -78,11 +78,20 @@ namespace BeerXMLSharp.Serialization
             // get the name of the child property
             string propertyName = element.Name.ToString();
 
-            Type objectType = BeerXMLProperty.GetTypeByName(propertyName);
+            Type objectType = BeerXMLProperty.TryGetTypeByName(propertyName);
+
+            // throw if the name of this tag does not have a corresponding
+            // BeerXML type
+            if (objectType == null)
+            {
+                throw new BeerXMLUnknownTypeTagException(propertyName, string.Format("Tag with name [{0}] has no corresponding IBeerXMLEntity type!", propertyName));
+            }
 
             // create the empty IBeerXMLEntity
             IBeerXMLEntity objectFromXElement = (IBeerXMLEntity)Activator.CreateInstance(objectType, nonPublic: true);
 
+            // IRecordSets need to have their child records
+            // deserialized and added to the collection
             if (objectFromXElement is IRecordSet)
             {
                 IRecordSet objAsRecordSet = objectFromXElement as IRecordSet;
@@ -103,7 +112,12 @@ namespace BeerXMLSharp.Serialization
             {
                 string childName = childElement.Name.ToString();
 
-                if (!propertyList.ContainsKey(childName)) continue;
+                // this means that the given tag is unrecognized - since the overall
+                // property type is recognized, just ignore it
+                if (!propertyList.ContainsKey(childName))
+                {
+                    continue;
+                }
 
                 BeerXMLProperty property = propertyList[childName];
 
@@ -263,7 +277,7 @@ namespace BeerXMLSharp.Serialization
 
             Type objType = obj.GetType();
 
-            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in BeerXMLProperty.GetBeerXMLPropertyList(objType))
+            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in BeerXMLProperty.TryGetBeerXMLPropertyList(objType))
             {
                 BeerXMLProperty beerXmlProperty = typeProperty.Value;
 

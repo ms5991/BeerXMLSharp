@@ -62,7 +62,7 @@ namespace BeerXMLSharp.OM
                 return this.Serializer.Serialize(this);
             }
 
-            throw new BeerXMLInvalidObjectException(string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()), code);
+            throw new BeerXMLInvalidObjectException(code, string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()));
         }
 
         /// <summary>
