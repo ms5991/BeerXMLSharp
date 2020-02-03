@@ -80,13 +80,5 @@ namespace BeerXMLSharp.OM.Records
 
             return result;
         }
-
-        #region Serialization indicators
-
-        public bool ShouldSerializeInfuse_Amount() { return this.Infuse_Amount != null; }
-        public bool ShouldSerializeRamp_Time() { return this.Ramp_Time != null; }
-        public bool ShouldSerializeEnd_Temp() { return this.End_Temp != null; }
-        
-        #endregion
     }
 }

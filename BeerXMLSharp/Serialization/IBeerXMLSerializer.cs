@@ -18,6 +18,14 @@ namespace BeerXMLSharp.Serialization
         string Serialize(IBeerXMLEntity obj);
 
         /// <summary>
+        /// Serializes the specified IBeerXMLEntity to BeerXML and output
+        /// to the given file.
+        /// </summary>
+        /// <param name="obj">The IBeerXMLEntity object.</param>
+        /// <returns></returns>
+        void Serialize(IBeerXMLEntity obj, string filePath);
+
+        /// <summary>
         /// Deserializes the contents of the specified file path into
         /// and IBeerXMLEntity object
         /// </summary>

@@ -29,17 +29,6 @@ namespace BeerXMLSharp.OM
         }
 
         /// <summary>
-        /// Tag used in BeerXML
-        /// </summary>
-        public virtual string TagName
-        {
-            get
-            {
-                return this.GetType().Name.ToUpperInvariant();
-            }
-        }
-
-        /// <summary>
         /// Returns a bool indicating if this instance will produce valid BeerXML.
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
@@ -84,7 +73,7 @@ namespace BeerXMLSharp.OM
         /// </returns>
         public override string ToString()
         {
-            return this.TagName;
+            return this.GetType().Name.ToUpperInvariant();
         }
     }
 }

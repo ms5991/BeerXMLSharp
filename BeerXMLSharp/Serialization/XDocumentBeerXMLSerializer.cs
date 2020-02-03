@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using BeerXMLSharp.OM;
+using BeerXMLSharp.Utilities;
 
 namespace BeerXMLSharp.Serialization
 {
@@ -15,113 +16,6 @@ namespace BeerXMLSharp.Serialization
     /// </summary>
     internal class XDocumentBeerXMLSerializer : IBeerXMLSerializer
     {
-        #region Helper class
-
-        /// <summary>
-        /// Private wrapper class to represent a property that should
-        /// be included in the beer XML serialization
-        /// </summary>
-        private class BeerXMLProperty
-        {
-            /// <summary>
-            /// Upper case name of the property
-            /// </summary>
-            public string Name
-            {
-                get
-                {
-                    return this.Property.Name.ToUpperInvariant();
-                }
-            }
-
-            /// <summary>
-            /// Indicates if this property is of type IBeerXMLEntity.
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if this instance is IBeerXMLEntity; otherwise, <c>false</c>.
-            /// </value>
-            public bool IsIBeerXMLEntity
-            {
-                get;
-            }
-
-            /// <summary>
-            /// Reflection PropertyInfo representing the property
-            /// </summary>
-            public PropertyInfo Property
-            {
-                get;
-            }
-
-            /// <summary>
-            /// The BeerXMLIncludeAttribute that was used on this property
-            /// </summary>
-            public BeerXMLIncludeAttribute Attribute
-            {
-                get;
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="BeerXMLProperty"/> class.
-            /// </summary>
-            /// <param name="property">The property.</param>
-            /// <param name="attribute">The attribute.</param>
-            /// <param name="isIBeerXMLEntity">if set to <c>true</c> [is i beer XML entity].</param>
-            public BeerXMLProperty(PropertyInfo property, BeerXMLIncludeAttribute attribute, bool isIBeerXMLEntity)
-            {
-                this.Property = property;
-                this.Attribute = attribute;
-                this.IsIBeerXMLEntity = isIBeerXMLEntity;
-            }
-        }
-
-        #endregion
-
-        #region Static initialization
-
-        /// <summary>
-        /// Static dictionary used to map types to property info, to avoid some extra reflection calls
-        /// at serialization time (do it all up front)
-        /// </summary>
-        private static readonly IDictionary<Type, IDictionary<string, BeerXMLProperty>> _typeToPropertyMap = new Dictionary<Type, IDictionary<string, BeerXMLProperty>>();
-
-        private static readonly IDictionary<string, Type> _typeNameToTypeMap = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Static constructor builds the dictionary of Types to property information
-        /// </summary>
-        static XDocumentBeerXMLSerializer()
-        {
-            // get the assembly
-            Assembly assembly = Assembly.GetExecutingAssembly();
-
-            // find every IBeerXMLEntity type in the assembly that is a non-abstract class
-            foreach (Type type in assembly.GetTypes().Where(t => typeof(IBeerXMLEntity).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract))
-            {
-                // add the name -> type mapping
-                _typeNameToTypeMap.Add(type.Name, type);
-
-                IDictionary<string, BeerXMLProperty> propInfoList = new Dictionary<string, BeerXMLProperty>(StringComparer.OrdinalIgnoreCase);
-
-                // find every property that has the BeerXMLIncludeAttribute on it
-                foreach (PropertyInfo property in type.GetProperties())
-                {
-                    BeerXMLIncludeAttribute attribute = property.GetCustomAttribute(typeof(BeerXMLIncludeAttribute), inherit: true) as BeerXMLIncludeAttribute;
-
-                    if (attribute != null)
-                    {
-                        BeerXMLProperty prop = new BeerXMLProperty(property, attribute, typeof(IBeerXMLEntity).IsAssignableFrom(property.PropertyType));
-                        propInfoList.Add(prop.Name, prop);
-                    }
-                }
-
-                // add to dictionary
-                _typeToPropertyMap.Add(type, propInfoList);
-            }
-        }
-
-        #endregion
-
         #region Public methods
 
         /// <summary>
@@ -141,6 +35,28 @@ namespace BeerXMLSharp.Serialization
             return builder.ToString();
         }
 
+        /// <summary>
+        /// Serializes the specified IBeerXMLEntity to BeerXML and output
+        /// to the given file.
+        /// </summary>
+        /// <param name="obj">The IBeerXMLEntity object.</param>
+        /// <param name="filePath"></param>
+        public void Serialize(IBeerXMLEntity obj, string filePath)
+        {
+            XDocument document = GetBeerXDocument(obj);
+
+            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            {
+                document.Save(fs);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the contents of the specified file path into
+        /// and IBeerXMLEntity object
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns></returns>
         public IBeerXMLEntity Deserialize(string filePath)
         {
             XDocument document = GetXDocumentFromFile(filePath);
@@ -152,18 +68,17 @@ namespace BeerXMLSharp.Serialization
 
         #region Deserialization helpers
 
+        /// <summary>
+        /// Parses an IBeerXMLEntity from the given XElement
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <returns></returns>
         private IBeerXMLEntity GetEntityFromElement(XElement element)
         {
             // get the name of the child property
             string propertyName = element.Name.ToString();
 
-            Type objectType;
-
-            // get the property type from the property name
-            if (!_typeNameToTypeMap.TryGetValue(propertyName, out objectType))
-            {
-                throw new ArgumentException(string.Format("Invalid type with property name [{0}]", propertyName));
-            }
+            Type objectType = BeerXMLProperty.GetTypeByName(propertyName);
 
             // create the empty IBeerXMLEntity
             IBeerXMLEntity objectFromXElement = (IBeerXMLEntity)Activator.CreateInstance(objectType, nonPublic: true);
@@ -181,16 +96,14 @@ namespace BeerXMLSharp.Serialization
             }
 
             // get the dictionary of property name to property for this type
-            IDictionary<string, BeerXMLProperty> propertyList = null;
-            if (!_typeToPropertyMap.TryGetValue(objectType, out propertyList))
-            {
-                throw new ArgumentException(string.Format("Invalid type with name [{0}] - unable to find property list!", objectType.Name));
-            }
+            IDictionary<string, BeerXMLProperty> propertyList = BeerXMLProperty.GetBeerXMLPropertyList(objectType);
 
             // foreach child element, set the property
             foreach (XElement childElement in element.Elements())
             {
                 string childName = childElement.Name.ToString();
+
+                if (!propertyList.ContainsKey(childName)) continue;
 
                 BeerXMLProperty property = propertyList[childName];
 
@@ -200,6 +113,13 @@ namespace BeerXMLSharp.Serialization
             return objectFromXElement;
         }
 
+
+        /// <summary>
+        /// Sets the type of the property by.
+        /// </summary>
+        /// <param name="beerXMLProperty">The beer XML property.</param>
+        /// <param name="entity">The entity.</param>
+        /// <param name="currentXElement">The current x element.</param>
         private void SetPropertyByType(BeerXMLProperty beerXMLProperty, IBeerXMLEntity entity, XElement currentXElement)
         {
             if (beerXMLProperty.IsIBeerXMLEntity)
@@ -214,17 +134,49 @@ namespace BeerXMLSharp.Serialization
             }
         }
 
+        /// <summary>
+        /// Parses the string into the given type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         private object ParseType(Type type, string value)
         {
-            if (type.IsEnum)
+            // if the type is nullable, get the underlyng type and 
+            // parse into that
+            Type underlyingNullable = Nullable.GetUnderlyingType(type);
+
+            // parse using the underlying type if applicable 
+            Type typeToParse = underlyingNullable == null ? type : underlyingNullable;
+
+            // parse enums directly with spaces replacing underscores (covnention)
+            if (typeToParse.IsEnum)
             {
-                return Enum.Parse(type, value.Replace(' ', '_'));
+                return Enum.Parse(typeToParse, value.Replace(' ', '_'));
             }
 
-            return Convert.ChangeType(value, type);
+            // ints need to be parsed to doubles first
+            // to support 
+            object valueToConvert;
+
+            if (typeToParse.IsInt32())
+            {
+                valueToConvert = Convert.ToDouble(value);
+            }
+            else
+            {
+                valueToConvert = value;
+            }
+
+            // convert to the target type
+            return Convert.ChangeType(valueToConvert, typeToParse);
         }
 
-
+        /// <summary>
+        /// Loads an XDocument from the given file
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns></returns>
         private XDocument GetXDocumentFromFile(string filePath)
         {
             XDocument result = null;
@@ -283,7 +235,7 @@ namespace BeerXMLSharp.Serialization
         /// <returns></returns>
         private XElement GetBeerXElement(IRecordSet obj)
         {
-            XElement element = new XElement(obj.TagName);
+            XElement element = new XElement(obj.GetType().Name.ToUpperInvariant());
 
             // get children XML
             foreach (IBeerXMLEntity record in obj)
@@ -307,11 +259,11 @@ namespace BeerXMLSharp.Serialization
         /// <returns></returns>
         private XElement GetBeerXElement(IRecord obj)
         {
-            XElement element = new XElement(obj.TagName);
+            XElement element = new XElement(obj.GetType().Name.ToUpperInvariant());
 
             Type objType = obj.GetType();
 
-            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in _typeToPropertyMap[objType])
+            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in BeerXMLProperty.GetBeerXMLPropertyList(objType))
             {
                 BeerXMLProperty beerXmlProperty = typeProperty.Value;
 

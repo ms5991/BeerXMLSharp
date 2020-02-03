@@ -11,11 +11,6 @@ namespace BeerXMLSharp.OM
     public interface IBeerXMLEntity
     {
         /// <summary>
-        /// Tag used in BeerXML
-        /// </summary>
-        string TagName { get; }
-
-        /// <summary>
         /// Returns a string containing the BeerXML representing this instance
         /// </summary>
         /// <returns></returns>

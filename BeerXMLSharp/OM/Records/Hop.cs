@@ -22,7 +22,7 @@ namespace BeerXMLSharp.OM.Records
         public HopUse Use { get; set; }
 
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
-        public int Time { get; set; }
+        public double Time { get; set; }
 
         #endregion
 

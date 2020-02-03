@@ -17,20 +17,39 @@ namespace BeerXMLSharp.Serialization
         /// Static dictionary used to map types to property info, to avoid some extra reflection calls
         /// at serialization time (do it all up front)
         /// </summary>
-        private static readonly IDictionary<Type, IList<BeerXMLProperty>> _typeToPropertyMap = new Dictionary<Type, IList<BeerXMLProperty>>();
+        private static readonly IDictionary<Type, IDictionary<string, BeerXMLProperty>> _typeToPropertyMap = new Dictionary<Type, IDictionary<string, BeerXMLProperty>>();
 
+        /// <summary>
+        /// Maps the name of a type to the Type
+        /// </summary>
+        private static readonly IDictionary<string, Type> _typeNameToTypeMap = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Indicates if the dictionaries have been initialized
+        /// </summary>
         private static bool _isInit = false;
 
-        private static void BuildTypeToPropertyMap()
+        /// <summary>
+        /// Ensures the property mapping dictionaries are built.
+        /// </summary>
+        private static void EnsurePropertyMappings()
         {
+            // dictionaries are built, just return
+            if (_isInit)
+            {
+                return;
+            }
+
             // get the assembly
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            var types = assembly.GetTypes().Where(t => typeof(IBeerXMLEntity).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract).ToList();
             // find every IBeerXMLEntity type in the assembly that is a non-abstract class
-            foreach (Type type in types)
+            foreach (Type type in assembly.GetTypes().Where(t => typeof(IBeerXMLEntity).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract))
             {
-                IList<BeerXMLProperty> propInfoList = new List<BeerXMLProperty>();
+                // add the name -> type mapping
+                _typeNameToTypeMap.Add(type.Name, type);
+
+                IDictionary<string, BeerXMLProperty> propInfoList = new Dictionary<string, BeerXMLProperty>(StringComparer.OrdinalIgnoreCase);
 
                 // find every property that has the BeerXMLIncludeAttribute on it
                 foreach (PropertyInfo property in type.GetProperties())
@@ -39,24 +58,39 @@ namespace BeerXMLSharp.Serialization
 
                     if (attribute != null)
                     {
-                        propInfoList.Add(new BeerXMLProperty(property, attribute, typeof(IBeerXMLEntity).IsAssignableFrom(property.PropertyType)));
+                        BeerXMLProperty prop = new BeerXMLProperty(property, attribute, typeof(IBeerXMLEntity).IsAssignableFrom(property.PropertyType));
+                        propInfoList.Add(prop.Name, prop);
                     }
                 }
 
                 // add to dictionary
                 _typeToPropertyMap.Add(type, propInfoList);
             }
+
+            // don't run this again
+            _isInit = true;
         }
 
-        public static IList<BeerXMLProperty> GetBeerXMLPropertyList(Type type)
+        /// <summary>
+        /// Gets the beer XML property list for the given type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static IDictionary<string, BeerXMLProperty> GetBeerXMLPropertyList(Type type)
         {
-            if (!_isInit)
-            {
-                BuildTypeToPropertyMap();
-                _isInit = true;
-            }
-
+            EnsurePropertyMappings();
             return _typeToPropertyMap[type];
+        }
+
+        /// <summary>
+        /// Gets the Type corresponding to the given name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public static Type GetTypeByName(string name)
+        {
+            EnsurePropertyMappings();
+            return _typeNameToTypeMap[name];
         }
 
         /// <summary>

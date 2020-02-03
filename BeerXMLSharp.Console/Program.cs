@@ -33,8 +33,8 @@ namespace BeerXMLSharp.ConsoleDisplay
             Water w = new Water(19, 1, 1, 1, 1, 2, 3, "Tap") { PH = 7 };
             waters.Add(w);
 
-            MashSteps steps = new MashSteps();
-            MashStep step1 = new MashStep(MashStepType.Infusion, 160, 30, "Soak");
+            Mash_Steps steps = new Mash_Steps();
+            Mash_Step step1 = new Mash_Step(MashStepType.Infusion, 160, 30, "Soak");
             steps.Add(step1);
 
             Mash mash = new Mash(68, steps, "Step1");
@@ -43,7 +43,7 @@ namespace BeerXMLSharp.ConsoleDisplay
             Recipe r = new Recipe(
                 RecipeType.Extract,
                 style,
-                "Michael Schulz",
+                "Bob Jones",
                 5,
                 6.5,
                 60,
@@ -67,11 +67,18 @@ namespace BeerXMLSharp.ConsoleDisplay
             string file = @"C:\Users\ms599\source\repos\BeerXMLSharp\BeerXMLSharp.Console\Examples\dryStout.xml";
 
             IBeerXMLEntity entity = BeerXML.Deserialize(file);
+
+            Console.WriteLine(entity.GetBeerXML());
+
         }
 
         public static void Main(string[] args)
         {
             Deserialize();
+            string t = "1.0";
+            int i;
+
+            Console.WriteLine(Convert.ChangeType(Convert.ChangeType(t, typeof(double)), typeof(int)));
         }
     }
 }
