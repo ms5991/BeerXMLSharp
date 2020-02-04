@@ -55,6 +55,12 @@ namespace BeerXMLSharp.OM.RecordSets
             bool result = true;
             foreach (IBeerXMLEntity child in _children)
             {
+                if (child.GetType() != typeof(T))
+                {
+                    result = false;
+                    errorCode |= ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE;
+                }
+
                 result &= child.IsValid(ref errorCode);
             }
 
@@ -68,16 +74,6 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <exception cref="ArgumentException"></exception>
         public void Add(IBeerXMLEntity child)
         {
-            if (child.GetType() != typeof(T))
-            {
-                throw new ArgumentException(
-                    string.Format(
-                        "Cannot add child of type [{0}] to record set of type [{1}]. Child must be of type [{2}]",
-                        child.GetType(),
-                        this.GetType(),
-                        typeof(T)));
-            }
-
             this._children.Add(child);
         }
 
