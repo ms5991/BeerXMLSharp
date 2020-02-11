@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    [Serializable]
-    public sealed class Mash_Step : BeerXMLRecordBase
+    public class Mash_Step : BeerXMLRecordBase
     {
         #region Required
 

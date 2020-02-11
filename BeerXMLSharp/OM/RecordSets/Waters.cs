@@ -9,7 +9,7 @@ namespace BeerXMLSharp.OM.RecordSets
     /// Record set of Water
     /// </summary>
     /// <seealso cref="BeerXMLSharp.OM.RecordSets.BeerXMLRecordSetBase{BeerXMLSharp.OM.Records.Water}" />
-    public sealed class Waters : BeerXMLRecordSetBase<Water>
+    public class Waters : BeerXMLRecordSetBase<Water>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Waters"/> class.

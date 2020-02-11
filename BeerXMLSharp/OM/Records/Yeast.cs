@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    public sealed class Yeast : BeerXMLRecordBase
+    public class Yeast : BeerXMLRecordBase
     {
         #region Required
 

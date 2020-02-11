@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    public sealed class Mash : BeerXMLRecordBase
+    public class Mash : BeerXMLRecordBase
     {
         #region Required
 

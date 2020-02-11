@@ -9,7 +9,7 @@ namespace BeerXMLSharp.OM.RecordSets
     /// Record set of Style
     /// </summary>
     /// <seealso cref="BeerXMLSharp.OM.RecordSets.BeerXMLRecordSetBase{BeerXMLSharp.OM.Records.Style}" />
-    public sealed class Styles : BeerXMLRecordSetBase<Style>
+    public class Styles : BeerXMLRecordSetBase<Style>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Styles"/> class.

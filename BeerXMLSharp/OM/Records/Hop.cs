@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace BeerXMLSharp.OM.Records
 {
-    public sealed class Hop : BeerXMLRecordBase
+    public class Hop : BeerXMLRecordBase
     {
         #region Required Properties
 
