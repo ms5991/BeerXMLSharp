@@ -24,19 +24,15 @@ namespace BeerXMLSharp.UnitTests.OM.Records
         }
 
         [TestMethod]
-        public void Mash_InvalidMashStep_Invalid()
+        public void Mash_InvalidMashSteps_Invalid()
         {
-            Mash_Steps steps = new Mash_Steps();
+            Mock<Mash_Steps> steps = new Mock<Mash_Steps>();
 
-            Mock<IBeerXMLEntity> mockMashStep = new Mock<IBeerXMLEntity>();
-
-       //     mockMashStep.Setup(m => m.IsValid()).Returns(false);
-
-            steps.Add(mockMashStep.Object);
-
+            steps.Setup(m => m.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(false);
+            
             Mash mash = new Mash(
                 70,
-                steps,
+                steps.Object,
                 "Empty");
 
             Assert.IsFalse(mash.IsValid());

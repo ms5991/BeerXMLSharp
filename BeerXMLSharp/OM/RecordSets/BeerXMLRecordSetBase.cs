@@ -52,10 +52,21 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns></returns>
         public override bool IsValid(ref ValidationCode errorCode)
         {
+            return IsValid(ref errorCode, suppressTypeCheck: false);
+        }
+
+        /// <summary>
+        /// Internal method used for testing purposes to allow bypassing the type check
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="suppressTypeCheck"></param>
+        /// <returns></returns>
+        internal bool IsValid(ref ValidationCode errorCode, bool suppressTypeCheck)
+        {
             bool result = true;
             foreach (IBeerXMLEntity child in _children)
             {
-                if (child.GetType() != typeof(T))
+                if (!suppressTypeCheck && child.GetType() != typeof(T))
                 {
                     result = false;
                     errorCode |= ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE;
