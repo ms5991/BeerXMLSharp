@@ -277,7 +277,7 @@ namespace BeerXMLSharp.Serialization
 
             Type objType = obj.GetType();
 
-            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in BeerXMLProperty.TryGetBeerXMLPropertyList(objType))
+            foreach (KeyValuePair<string, BeerXMLProperty> typeProperty in BeerXMLProperty.GetBeerXMLPropertyList(objType))
             {
                 BeerXMLProperty beerXmlProperty = typeProperty.Value;
 
