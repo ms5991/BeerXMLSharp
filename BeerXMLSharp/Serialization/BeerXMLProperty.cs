@@ -55,7 +55,7 @@ namespace BeerXMLSharp.Serialization
                 foreach (PropertyInfo property in type.GetProperties())
                 {
                     BeerXMLIncludeAttribute attribute = property.GetCustomAttribute(typeof(BeerXMLIncludeAttribute), inherit: true) as BeerXMLIncludeAttribute;
-
+ 
                     if (attribute != null)
                     {
                         BeerXMLProperty prop = new BeerXMLProperty(property, attribute, typeof(IBeerXMLEntity).IsAssignableFrom(property.PropertyType));

@@ -14,7 +14,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Mash_Steps"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Mash_Steps(IList<IBeerXMLEntity> children) : base(children)
+        public Mash_Steps(IList<IRecord> children) : base(children)
         {
         }
 

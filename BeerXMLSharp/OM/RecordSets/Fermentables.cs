@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Fermentables"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Fermentables(IList<IBeerXMLEntity> children) : base(children)
+        public Fermentables(IList<IRecord> children) : base(children)
         {
         }
 

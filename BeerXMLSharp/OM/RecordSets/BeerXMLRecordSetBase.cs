@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
     /// <seealso cref="BeerXMLSharp.OM.IRecordSet" />
     public abstract class BeerXMLRecordSetBase<T> : BeerXMLEntityBase, IRecordSet
     {
-        private IList<IBeerXMLEntity> _children { get; set; } = null;
+        private IList<IRecord> _children { get; set; } = null;
 
         /// <summary>
         /// Number of items in this set
@@ -33,14 +33,14 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         internal BeerXMLRecordSetBase() : base()
         {
-            this._children = new List<IBeerXMLEntity>();
+            this._children = new List<IRecord>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BeerXMLRecordSetBase{T}"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        internal BeerXMLRecordSetBase(IList<IBeerXMLEntity> children)
+        internal BeerXMLRecordSetBase(IList<IRecord> children)
         {
             this._children = children;
         }
@@ -83,7 +83,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         /// <param name="child">Child record to add</param>
         /// <exception cref="ArgumentException"></exception>
-        public void Add(IBeerXMLEntity child)
+        public void Add(IRecord child)
         {
             this._children.Add(child);
         }
@@ -92,7 +92,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Removes a record from this set
         /// </summary>
         /// <param name="child">Child record to remove</param>
-        public void Remove(IBeerXMLEntity child)
+        public void Remove(IRecord child)
         {
             this._children.Remove(child);
         }
@@ -103,7 +103,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns>
         /// An enumerator that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<IBeerXMLEntity> GetEnumerator()
+        public IEnumerator<IRecord> GetEnumerator()
         {
             return _children.GetEnumerator();
         }

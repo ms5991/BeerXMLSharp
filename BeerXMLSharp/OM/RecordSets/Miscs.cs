@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Miscs"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Miscs(IList<IBeerXMLEntity> children) : base(children)
+        public Miscs(IList<IRecord> children) : base(children)
         {
         }
 

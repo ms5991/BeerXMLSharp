@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Initializes a new instance of the <see cref="Equipments"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Equipments(IList<IBeerXMLEntity> children) : base(children)
+        public Equipments(IList<IRecord> children) : base(children)
         {
         }
 
