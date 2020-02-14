@@ -29,7 +29,7 @@ namespace BeerXMLSharp.UnitTests.OM.Records
             Mock<Mash_Steps> steps = new Mock<Mash_Steps>();
 
             steps.Setup(m => m.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(false);
-            
+
             Mash mash = new Mash(
                 70,
                 steps.Object,
