@@ -75,7 +75,7 @@ namespace BeerXMLSharp.OM.Records
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
         /// <returns></returns>
-        public override sealed bool IsValid(ref ValidationCode errorCode)
+        public override bool IsValid(ref ValidationCode errorCode)
         {
             return this.IsValidInternal(ref errorCode) && this.ValidateConditionalProperties(ref errorCode);
         }
