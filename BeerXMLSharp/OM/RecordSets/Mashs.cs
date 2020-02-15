@@ -9,13 +9,13 @@ namespace BeerXMLSharp.OM.RecordSets
     /// Record set of Mash
     /// </summary>
     /// <seealso cref="BeerXMLSharp.OM.RecordSets.BeerXMLRecordSetBase{BeerXMLSharp.OM.Records.Mash}" />
-    public sealed class Mashs : BeerXMLRecordSetBase<Mash>
+    public class Mashs : BeerXMLRecordSetBase<Mash>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Mashs"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        public Mashs(IList<IBeerXMLEntity> children) : base(children)
+        public Mashs(IList<IRecord> children) : base(children)
         {
         }
 

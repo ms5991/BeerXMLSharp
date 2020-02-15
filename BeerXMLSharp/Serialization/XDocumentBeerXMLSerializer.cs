@@ -78,6 +78,7 @@ namespace BeerXMLSharp.Serialization
             // get the name of the child property
             string propertyName = element.Name.ToString();
 
+
             Type objectType = BeerXMLProperty.TryGetTypeByName(propertyName);
 
             // throw if the name of this tag does not have a corresponding
@@ -98,7 +99,7 @@ namespace BeerXMLSharp.Serialization
 
                 foreach (XElement childElement in element.Elements())
                 {
-                    objAsRecordSet.Add(GetEntityFromElement(childElement));
+                    objAsRecordSet.Add(GetEntityFromElement(childElement) as IRecord);
                 }
 
                 return objAsRecordSet;
@@ -126,7 +127,6 @@ namespace BeerXMLSharp.Serialization
 
             return objectFromXElement;
         }
-
 
         /// <summary>
         /// Sets the type of the property by.

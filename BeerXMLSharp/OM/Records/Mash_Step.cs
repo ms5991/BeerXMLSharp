@@ -5,8 +5,7 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    [Serializable]
-    public sealed class Mash_Step : BeerXMLRecordBase
+    public class Mash_Step : BeerXMLRecordBase
     {
         #region Required
 
@@ -75,7 +74,7 @@ namespace BeerXMLSharp.OM.Records
                 this.Infuse_Amount != null)
             {
                 result = false;
-                errorCode |= ValidationCode.DECOTION_MISSING_INFUSE_AMOUNT;
+                errorCode |= ValidationCode.DECOCTION_NON_EMPTY_INFUSE_AMOUNT;
             }
 
             return result;

@@ -107,17 +107,17 @@ namespace BeerXMLSharp.OM
     [Flags]
     public enum ValidationCode
     {
-        SUCCESS = 0,
-        BATCH_OR_BOIL_SIZE_MISMATCH = 1,
-        MISSING_MASH_STEP_FOR_NON_EXTRACT = 2,
-        INVALID_DATE = 4,
-        DECOTION_MISSING_INFUSE_AMOUNT = 8,
-        GRAIN_DETAILS_ONLY_GRAIN_TYPE = 16,
-        HOPPED_FERMENTABLE_EXTRACT_ONLY = 32,
-        PRIMING_SUGAR_FOR_FORCED_CARBONATION = 64,
-        EFFICIENCY_REQUIRED_FOR_GRAINS = 128,
-        BOIL_VOLUME_REQUIRED_PARAMS_MISSING = 256,
-
+        SUCCESS                                 = 0,
+        BATCH_OR_BOIL_SIZE_MISMATCH             = 1 << 0,
+        MISSING_MASH_STEP_FOR_NON_EXTRACT       = 1 << 1,
+        INVALID_DATE                            = 1 << 2,
+        DECOCTION_NON_EMPTY_INFUSE_AMOUNT       = 1 << 3,
+        GRAIN_DETAILS_ONLY_GRAIN_TYPE           = 1 << 4,
+        HOPPED_FERMENTABLE_EXTRACT_ONLY         = 1 << 5,
+        PRIMING_SUGAR_FOR_FORCED_CARBONATION    = 1 << 6,
+        EFFICIENCY_REQUIRED_FOR_GRAINS          = 1 << 7,
+        BOIL_VOLUME_REQUIRED_PARAMS_MISSING     = 1 << 8,
+        RECORD_SET_CONTAINS_INVALID_TYPE        = 1 << 9
     }
 
 

@@ -15,7 +15,7 @@ namespace BeerXMLSharp.OM.RecordSets
     /// <seealso cref="BeerXMLSharp.OM.IRecordSet" />
     public abstract class BeerXMLRecordSetBase<T> : BeerXMLEntityBase, IRecordSet
     {
-        private IList<IBeerXMLEntity> _children { get; set; } = null;
+        private IList<IRecord> _children { get; set; } = null;
 
         /// <summary>
         /// Number of items in this set
@@ -33,14 +33,14 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         internal BeerXMLRecordSetBase() : base()
         {
-            this._children = new List<IBeerXMLEntity>();
+            this._children = new List<IRecord>();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BeerXMLRecordSetBase{T}"/> class.
         /// </summary>
         /// <param name="children">The children.</param>
-        internal BeerXMLRecordSetBase(IList<IBeerXMLEntity> children)
+        internal BeerXMLRecordSetBase(IList<IRecord> children)
         {
             this._children = children;
         }
@@ -52,9 +52,26 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns></returns>
         public override bool IsValid(ref ValidationCode errorCode)
         {
+            return IsValid(ref errorCode, suppressTypeCheck: false);
+        }
+
+        /// <summary>
+        /// Internal method used for testing purposes to allow bypassing the type check
+        /// </summary>
+        /// <param name="errorCode"></param>
+        /// <param name="suppressTypeCheck"></param>
+        /// <returns></returns>
+        internal bool IsValid(ref ValidationCode errorCode, bool suppressTypeCheck)
+        {
             bool result = true;
             foreach (IBeerXMLEntity child in _children)
             {
+                if (!suppressTypeCheck && child.GetType() != typeof(T))
+                {
+                    result = false;
+                    errorCode |= ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE;
+                }
+
                 result &= child.IsValid(ref errorCode);
             }
 
@@ -66,18 +83,8 @@ namespace BeerXMLSharp.OM.RecordSets
         /// </summary>
         /// <param name="child">Child record to add</param>
         /// <exception cref="ArgumentException"></exception>
-        public void Add(IBeerXMLEntity child)
+        public void Add(IRecord child)
         {
-            if (child.GetType() != typeof(T))
-            {
-                throw new ArgumentException(
-                    string.Format(
-                        "Cannot add child of type [{0}] to record set of type [{1}]. Child must be of type [{2}]",
-                        child.GetType(),
-                        this.GetType(),
-                        typeof(T)));
-            }
-
             this._children.Add(child);
         }
 
@@ -85,7 +92,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// Removes a record from this set
         /// </summary>
         /// <param name="child">Child record to remove</param>
-        public void Remove(IBeerXMLEntity child)
+        public void Remove(IRecord child)
         {
             this._children.Remove(child);
         }
@@ -96,7 +103,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns>
         /// An enumerator that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator<IBeerXMLEntity> GetEnumerator()
+        public IEnumerator<IRecord> GetEnumerator()
         {
             return _children.GetEnumerator();
         }

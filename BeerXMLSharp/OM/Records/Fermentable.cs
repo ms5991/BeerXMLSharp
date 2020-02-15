@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BeerXMLSharp.OM.Records
 {
-    public sealed class Fermentable : BeerXMLRecordBase
+    public class Fermentable : BeerXMLRecordBase
     {
         #region Required
         [BeerXMLInclude(requirement: PropertyRequirement.REQUIRED)]
