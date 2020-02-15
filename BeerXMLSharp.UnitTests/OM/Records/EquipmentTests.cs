@@ -9,7 +9,7 @@ namespace BeerXMLSharp.UnitTests.OM.Records
     public class EquipmentTests
     {
         [TestMethod]
-        public void Equipment_Calc_Volume_False_Valid()
+        public void Equipment_Valid()
         {
             double volume = 6.5;
             double boilSize = 6.5;
@@ -23,6 +23,26 @@ namespace BeerXMLSharp.UnitTests.OM.Records
                 name);
 
             Assert.IsTrue(equipment.IsValid());
+        }
+
+        [TestMethod]
+        public void Equipment_Valid_ErrorCode()
+        {
+            double volume = 6.5;
+            double boilSize = 6.5;
+            double batchSize = 5;
+            string name = "EquipmentName";
+
+            Equipment equipment = new Equipment(
+                volume,
+                boilSize,
+                batchSize,
+                name);
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+            equipment.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
 
         [TestMethod]

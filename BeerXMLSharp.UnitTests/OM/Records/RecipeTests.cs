@@ -136,7 +136,8 @@ namespace BeerXMLSharp.UnitTests.OM.Records
                 "Test");
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
-            Assert.IsTrue(recipe.IsValid(ref errorCode));
+
+            recipe.IsValid(ref errorCode);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -508,6 +509,98 @@ namespace BeerXMLSharp.UnitTests.OM.Records
             recipe.IsValid(ref errorCode);
 
             Assert.AreEqual(ValidationCode.MISSING_MASH_STEP_FOR_NON_EXTRACT, errorCode);
+        }
+
+        [TestMethod]
+        public void Recipe_Invalid_BadDate()
+        {
+            Recipe recipe = GetRecipe(
+                RecipeType.All_Grain,
+                "Michael",
+                5.0,
+                6.5,
+                60,
+                "Test");
+
+            recipe.Date = "not a date";
+
+            Assert.IsFalse(recipe.IsValid());
+        }
+
+        [TestMethod]
+        public void Recipe_Invalid_BadDate_ErrorCode()
+        {
+            Recipe recipe = GetRecipe(
+                RecipeType.Extract,
+                "Michael",
+                5.0,
+                6.5,
+                60,
+                "Test");
+
+            recipe.Date = "not a date";
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            recipe.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.INVALID_DATE, errorCode);
+        }
+
+        [TestMethod]
+        public void Recipe_Valid_ValidDate()
+        {
+            Recipe recipe = GetRecipe(
+                RecipeType.Extract,
+                "Michael",
+                5.0,
+                6.5,
+                60,
+                "Test");
+
+            recipe.Date = DateTime.UtcNow.ToString();
+
+            Assert.IsTrue(recipe.IsValid());
+        }
+
+        [TestMethod]
+        public void Recipe_Invalid_ForcedCarbonation_NonEmptyPrimingSugar()
+        {
+            Recipe recipe = GetRecipe(
+                RecipeType.All_Grain,
+                "Michael",
+                5.0,
+                6.5,
+                60,
+                "Test");
+
+            recipe.Forced_Carbonation = true;
+
+            recipe.Priming_Sugar_Name = "test";
+
+            Assert.IsFalse(recipe.IsValid());
+        }
+
+        [TestMethod]
+        public void Recipe_Invalid_ForcedCarbonation_NonEmptyPrimingSugar_ErrorCode()
+        {
+            Recipe recipe = GetRecipe(
+                RecipeType.Extract,
+                "Michael",
+                5.0,
+                6.5,
+                60,
+                "Test");
+
+            recipe.Forced_Carbonation = true;
+
+            recipe.Priming_Sugar_Name = "test";
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            recipe.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.PRIMING_SUGAR_FOR_FORCED_CARBONATION, errorCode);
         }
     }
 }

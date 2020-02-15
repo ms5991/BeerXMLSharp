@@ -24,6 +24,23 @@ namespace BeerXMLSharp.UnitTests.OM.Records
         }
 
         [TestMethod]
+        public void Mash_EmptySteps_Valid_ErrorCode()
+        {
+            Mash_Steps steps = new Mash_Steps();
+
+            Mash mash = new Mash(
+                70,
+                steps,
+                "Empty");
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            mash.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
+        }
+
+        [TestMethod]
         public void Mash_InvalidMashSteps_Invalid()
         {
             Mock<Mash_Steps> steps = new Mock<Mash_Steps>();

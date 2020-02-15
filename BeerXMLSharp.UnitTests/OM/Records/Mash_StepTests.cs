@@ -23,6 +23,22 @@ namespace BeerXMLSharp.UnitTests.OM.Records
         }
 
         [TestMethod]
+        public void MashStep_Valid_ErrorCode()
+        {
+            Mash_Step steps = new Mash_Step(
+                MashStepType.Infusion,
+                1.0,
+                1.0,
+                "Step 1");
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            steps.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
+        }
+
+        [TestMethod]
         public void MashStep_Decotion_NonNullInfusion_Invalid()
         {
             Mash_Step steps = new Mash_Step(

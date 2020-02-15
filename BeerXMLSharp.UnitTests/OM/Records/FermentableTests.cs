@@ -28,6 +28,29 @@ namespace BeerXMLSharp.UnitTests.OM.Records
         }
 
         [TestMethod]
+        public void Fermentable_Valid_ErrorCode()
+        {
+            string fermentableName = "Ferm";
+            FermentableType type = FermentableType.Extract;
+            double amount = 14;
+            double yield = 50;
+            double color = 40;
+
+            Fermentable ferm = new Fermentable(
+                fermentableName,
+                type,
+                amount,
+                yield,
+                color);
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            ferm.IsValid(ref errorCode);
+
+            Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
+        }
+
+        [TestMethod]
         public void Fermentable_Invalid_NonExtract_IBU()
         {
             string fermentableName = "Ferm";

@@ -22,5 +22,21 @@ namespace BeerXMLSharp.UnitTests.OM.Records
 
             Assert.IsTrue(misc.IsValid());
         }
+
+        [TestMethod]
+        public void Misc_Valid_ErrorCode()
+        {
+            Misc misc = new Misc(
+                MiscType.Fining,
+                MiscUse.Boil,
+                1.0,
+                1.0,
+                "Test");
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+            misc.IsValid();
+
+            Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
+        }
     }
 }
