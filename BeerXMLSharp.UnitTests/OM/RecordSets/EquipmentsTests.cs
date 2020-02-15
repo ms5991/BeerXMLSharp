@@ -1,234 +1,105 @@
 using BeerXMLSharp.OM;
 using BeerXMLSharp.OM.Records;
+using BeerXMLSharp.OM.RecordSets;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 
-namespace BeerXMLSharp.UnitTests.OM.Records
+namespace BeerXMLSharp.UnitTests.OM.RecordSets
 {
     [TestClass]
     public class EquipmentsTests
     {
-        [TestMethod]
-        public void Equipment_Valid()
+        private Mock<Equipment> GetMockEquipment()
         {
-            double volume = 6.5;
-            double boilSize = 6.5;
-            double batchSize = 5;
-            string name = "EquipmentName";
+            return new Mock<Equipment>(
+                5.5,
+                5.0,
+                6.5,
+                "Test",
+                1);
+        }
 
-            Equipment equipment = new Equipment(
-                volume,
-                boilSize,
-                batchSize,
-                name);
+        [TestMethod]
+        public void Equipments_Valid_Empty()
+        {
+            Equipments equipments = new Equipments();
 
-            Assert.IsTrue(equipment.IsValid());
+            Assert.IsTrue(equipments.IsValid());
+        }
+
+        [TestMethod]
+        public void Equipments_Valid_NonEmpty()
+        {
+            Equipments equipments = new Equipments();
+
+            Mock<Equipment> equipment = GetMockEquipment();
+
+            equipment.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+
+            equipments.Add(equipment.Object);
+
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            // need to suppress the type check because moq uses a different type
+            Assert.IsTrue(equipments.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Equipment_Valid_ErrorCode()
         {
-            double volume = 6.5;
-            double boilSize = 6.5;
-            double batchSize = 5;
-            string name = "EquipmentName";
+            Equipments equipments = new Equipments();
 
-            Equipment equipment = new Equipment(
-                volume,
-                boilSize,
-                batchSize,
-                name);
+            Mock<Equipment> equipment = GetMockEquipment();
+
+            equipment.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+
+            equipments.Add(equipment.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
-            equipment.IsValid(ref errorCode);
+
+            // need to suppress the type check because moq uses a different type
+            equipments.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
 
         [TestMethod]
-        public void Equipment_Calc_Volume_True_Valid()
+        public void Equipments_Invalid_BadType()
         {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
+            Equipments equipments = new Equipments();
 
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
+            Mock<Equipment> equipment = GetMockEquipment();
 
-            Assert.IsTrue(equipment.IsValid());
-        }
+            equipment.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-        [TestMethod]
-        public void Equipment_Calc_Volume_True_Invalid_TopUpWater()
-        {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
-
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
-
-            equipment.Top_Up_Water = null;
-
-            Assert.IsFalse(equipment.IsValid());
-        }
-
-        [TestMethod]
-        public void Equipment_Calc_Volume_True_Invalid_TrubChillerLoss()
-        {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
-
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
-
-            equipment.Trub_Chiller_Loss = null;
-
-            Assert.IsFalse(equipment.IsValid());
-        }
-
-        [TestMethod]
-        public void Equipment_Calc_Volume_True_Invalid_BoilTime()
-        {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
-
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
-
-            equipment.Boil_Time = null;
-
-            Assert.IsFalse(equipment.IsValid());
-        }
-
-        [TestMethod]
-        public void Equipment_Calc_Volume_True_Invalid_EvapRate()
-        {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
-
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
-
-            equipment.Evap_Rate = null;
-
-            Assert.IsFalse(equipment.IsValid());
-        }
-
-        [TestMethod]
-        public void Equipment_Calc_Volume_True_Invalid_CorrectErrorCode()
-        {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
-
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
-
-            equipment.Evap_Rate = null;
+            equipments.Add(equipment.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
-            equipment.IsValid(ref errorCode);
-
-            // only validation code should be missing params
-            Assert.AreEqual(ValidationCode.BOIL_VOLUME_REQUIRED_PARAMS_MISSING, errorCode);
+            // do not suppress type check. Since moq uses a different type anyway,
+            // there is no need to test with a different IRecord type
+            Assert.IsFalse(equipments.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
-        public void Equipment_Calc_Volume_True_Correct_Volume()
+        public void Equipments_Invalid_BadType_ErrorCode()
         {
-            double volume = 6.5;
-            double batchSize = 5;
-            double topUpWater = 3;
-            double trubChillerLoss = 1;
-            double boilTime = 60;
-            double evapRate = 0.66;
-            string name = "EquipmentName";
+            Equipments equipments = new Equipments();
 
-            Equipment equipment = new Equipment(
-                volume,
-                batchSize,
-                name,
-                topUpWater,
-                trubChillerLoss,
-                boilTime,
-                evapRate);
+            Mock<Equipment> equipment = GetMockEquipment();
 
-            double expectedVolume = (batchSize - topUpWater - trubChillerLoss) * (1 + boilTime * evapRate);
+            equipment.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Assert.IsTrue(IsEqualWithEpsilon(expectedVolume, equipment.Boil_Size));
-        }
+            equipments.Add(equipment.Object);
 
-        /// <summary>
-        /// Helper to determine if two doubles are equal to a given epsilon
-        /// </summary>
-        private bool IsEqualWithEpsilon(double firstValue, double secondValue, double epsilon = 0.0001)
-        {
-            return Math.Abs(firstValue - secondValue) <= epsilon;
+            ValidationCode errorCode = ValidationCode.SUCCESS;
+
+            // do not suppress type check. Since moq uses a different type anyway,
+            // there is no need to test with a different IRecord type
+            equipments.IsValid(ref errorCode, suppressTypeCheck: false);
+
+            Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }
     }
 }

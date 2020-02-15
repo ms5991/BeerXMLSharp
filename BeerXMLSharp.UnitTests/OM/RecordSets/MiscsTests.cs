@@ -25,43 +25,43 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Miscs_Valid_Empty()
         {
-            Miscs Miscs = new Miscs();
+            Miscs miscs = new Miscs();
 
-            Assert.IsTrue(Miscs.IsValid());
+            Assert.IsTrue(miscs.IsValid());
         }
 
         [TestMethod]
         public void Miscs_Valid_NonEmpty()
         {
-            Miscs Miscs = new Miscs();
+            Miscs miscs = new Miscs();
 
-            Mock<Misc> Misc = GetMockMisc();
+            Mock<Misc> misc = GetMockMisc();
 
-            Misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Miscs.Add(Misc.Object);
+            miscs.Add(misc.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(Miscs.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(miscs.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Misc_Valid_ErrorCode()
         {
-            Miscs Miscs = new Miscs();
+            Miscs miscs = new Miscs();
 
-            Mock<Misc> Misc = GetMockMisc();
+            Mock<Misc> misc = GetMockMisc();
 
-            Misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Miscs.Add(Misc.Object);
+            miscs.Add(misc.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Miscs.IsValid(ref errorCode, suppressTypeCheck: true);
+            miscs.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -69,37 +69,37 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Miscs_Invalid_BadType()
         {
-            Miscs Miscs = new Miscs();
+            Miscs miscs = new Miscs();
 
-            Mock<Misc> Misc = GetMockMisc();
+            Mock<Misc> misc = GetMockMisc();
 
-            Misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Miscs.Add(Misc.Object);
+            miscs.Add(misc.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(Miscs.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(miscs.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
         public void Miscs_Invalid_BadType_ErrorCode()
         {
-            Miscs Miscs = new Miscs();
+            Miscs miscs = new Miscs();
 
-            Mock<Misc> Misc = GetMockMisc();
+            Mock<Misc> misc = GetMockMisc();
 
-            Misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            misc.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Miscs.Add(Misc.Object);
+            miscs.Add(misc.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Miscs.IsValid(ref errorCode, suppressTypeCheck: false);
+            miscs.IsValid(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }

@@ -12,12 +12,10 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
     {
         private Mock<Mash> GetMockMash()
         {
-            Mock<Mash_Steps> steps = new Mock<Mash_Steps>();
-
-            steps.Setup(m => m.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            Mash_Steps steps = new Mash_Steps();
 
             return new Mock<Mash>(
-                70,
+                70.0,
                 steps,
                 "Empty",
                 1);
@@ -26,43 +24,43 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Mashs_Valid_Empty()
         {
-            Mashs Mashs = new Mashs();
+            Mashs mashs = new Mashs();
 
-            Assert.IsTrue(Mashs.IsValid());
+            Assert.IsTrue(mashs.IsValid());
         }
 
         [TestMethod]
         public void Mashs_Valid_NonEmpty()
         {
-            Mashs Mashs = new Mashs();
+            Mashs mashs = new Mashs();
 
-            Mock<Mash> Mash = GetMockMash();
+            Mock<Mash> mash = GetMockMash();
 
-            Mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Mashs.Add(Mash.Object);
+            mashs.Add(mash.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(Mashs.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(mashs.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Mash_Valid_ErrorCode()
         {
-            Mashs Mashs = new Mashs();
+            Mashs mashs = new Mashs();
 
-            Mock<Mash> Mash = GetMockMash();
+            Mock<Mash> mash = GetMockMash();
 
-            Mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Mashs.Add(Mash.Object);
+            mashs.Add(mash.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Mashs.IsValid(ref errorCode, suppressTypeCheck: true);
+            mashs.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -70,37 +68,37 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Mashs_Invalid_BadType()
         {
-            Mashs Mashs = new Mashs();
+            Mashs mashs = new Mashs();
 
-            Mock<Mash> Mash = GetMockMash();
+            Mock<Mash> mash = GetMockMash();
 
-            Mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Mashs.Add(Mash.Object);
+            mashs.Add(mash.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(Mashs.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(mashs.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
         public void Mashs_Invalid_BadType_ErrorCode()
         {
-            Mashs Mashs = new Mashs();
+            Mashs mashs = new Mashs();
 
-            Mock<Mash> Mash = GetMockMash();
+            Mock<Mash> mash = GetMockMash();
 
-            Mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            mash.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Mashs.Add(Mash.Object);
+            mashs.Add(mash.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Mashs.IsValid(ref errorCode, suppressTypeCheck: false);
+            mashs.IsValid(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }

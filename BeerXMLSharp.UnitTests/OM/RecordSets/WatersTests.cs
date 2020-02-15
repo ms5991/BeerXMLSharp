@@ -27,43 +27,43 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Waters_Valid_Empty()
         {
-            Waters Waters = new Waters();
+            Waters waters = new Waters();
 
-            Assert.IsTrue(Waters.IsValid());
+            Assert.IsTrue(waters.IsValid());
         }
 
         [TestMethod]
         public void Waters_Valid_NonEmpty()
         {
-            Waters Waters = new Waters();
+            Waters waters = new Waters();
 
-            Mock<Water> Water = GetMockWater();
+            Mock<Water> water = GetMockWater();
 
-            Water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Waters.Add(Water.Object);
+            waters.Add(water.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(Waters.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(waters.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Water_Valid_ErrorCode()
         {
-            Waters Waters = new Waters();
+            Waters waters = new Waters();
 
-            Mock<Water> Water = GetMockWater();
+            Mock<Water> water = GetMockWater();
 
-            Water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Waters.Add(Water.Object);
+            waters.Add(water.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Waters.IsValid(ref errorCode, suppressTypeCheck: true);
+            waters.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -71,37 +71,37 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Waters_Invalid_BadType()
         {
-            Waters Waters = new Waters();
+            Waters waters = new Waters();
 
-            Mock<Water> Water = GetMockWater();
+            Mock<Water> water = GetMockWater();
 
-            Water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Waters.Add(Water.Object);
+            waters.Add(water.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(Waters.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(waters.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
         public void Waters_Invalid_BadType_ErrorCode()
         {
-            Waters Waters = new Waters();
+            Waters waters = new Waters();
 
-            Mock<Water> Water = GetMockWater();
+            Mock<Water> water = GetMockWater();
 
-            Water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            water.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Waters.Add(Water.Object);
+            waters.Add(water.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Waters.IsValid(ref errorCode, suppressTypeCheck: false);
+            waters.IsValid(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }

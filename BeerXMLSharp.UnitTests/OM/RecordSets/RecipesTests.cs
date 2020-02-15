@@ -80,43 +80,43 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Recipes_Valid_Empty()
         {
-            Recipes Recipes = new Recipes();
+            Recipes recipes = new Recipes();
 
-            Assert.IsTrue(Recipes.IsValid());
+            Assert.IsTrue(recipes.IsValid());
         }
 
         [TestMethod]
         public void Recipes_Valid_NonEmpty()
         {
-            Recipes Recipes = new Recipes();
+            Recipes recipes = new Recipes();
 
-            Mock<Recipe> Recipe = GetMockRecipe();
+            Mock<Recipe> recipe = GetMockRecipe();
 
-            Recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Recipes.Add(Recipe.Object);
+            recipes.Add(recipe.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(Recipes.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(recipes.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Recipe_Valid_ErrorCode()
         {
-            Recipes Recipes = new Recipes();
+            Recipes recipes = new Recipes();
 
-            Mock<Recipe> Recipe = GetMockRecipe();
+            Mock<Recipe> recipe = GetMockRecipe();
 
-            Recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Recipes.Add(Recipe.Object);
+            recipes.Add(recipe.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Recipes.IsValid(ref errorCode, suppressTypeCheck: true);
+            recipes.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -124,37 +124,37 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Recipes_Invalid_BadType()
         {
-            Recipes Recipes = new Recipes();
+            Recipes recipes = new Recipes();
 
-            Mock<Recipe> Recipe = GetMockRecipe();
+            Mock<Recipe> recipe = GetMockRecipe();
 
-            Recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Recipes.Add(Recipe.Object);
+            recipes.Add(recipe.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(Recipes.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(recipes.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
         public void Recipes_Invalid_BadType_ErrorCode()
         {
-            Recipes Recipes = new Recipes();
+            Recipes recipes = new Recipes();
 
-            Mock<Recipe> Recipe = GetMockRecipe();
+            Mock<Recipe> recipe = GetMockRecipe();
 
-            Recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            recipe.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Recipes.Add(Recipe.Object);
+            recipes.Add(recipe.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Recipes.IsValid(ref errorCode, suppressTypeCheck: false);
+            recipes.IsValid(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }

@@ -31,43 +31,43 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Styles_Valid_Empty()
         {
-            Styles Styles = new Styles();
+            Styles styles = new Styles();
 
-            Assert.IsTrue(Styles.IsValid());
+            Assert.IsTrue(styles.IsValid());
         }
 
         [TestMethod]
         public void Styles_Valid_NonEmpty()
         {
-            Styles Styles = new Styles();
+            Styles styles = new Styles();
 
-            Mock<Style> Style = GetMockStyle();
+            Mock<Style> style = GetMockStyle();
 
-            Style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Styles.Add(Style.Object);
+            styles.Add(style.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(Styles.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(styles.IsValid(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
         public void Style_Valid_ErrorCode()
         {
-            Styles Styles = new Styles();
+            Styles styles = new Styles();
 
-            Mock<Style> Style = GetMockStyle();
+            Mock<Style> style = GetMockStyle();
 
-            Style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Styles.Add(Style.Object);
+            styles.Add(style.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Styles.IsValid(ref errorCode, suppressTypeCheck: true);
+            styles.IsValid(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -75,37 +75,37 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
         [TestMethod]
         public void Styles_Invalid_BadType()
         {
-            Styles Styles = new Styles();
+            Styles styles = new Styles();
 
-            Mock<Style> Style = GetMockStyle();
+            Mock<Style> style = GetMockStyle();
 
-            Style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Styles.Add(Style.Object);
+            styles.Add(style.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(Styles.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(styles.IsValid(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
         public void Styles_Invalid_BadType_ErrorCode()
         {
-            Styles Styles = new Styles();
+            Styles styles = new Styles();
 
-            Mock<Style> Style = GetMockStyle();
+            Mock<Style> style = GetMockStyle();
 
-            Style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
+            style.Setup(s => s.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(true);
 
-            Styles.Add(Style.Object);
+            styles.Add(style.Object);
 
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Styles.IsValid(ref errorCode, suppressTypeCheck: false);
+            styles.IsValid(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }
