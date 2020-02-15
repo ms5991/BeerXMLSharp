@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BeerXMLSharp.Utilities
+namespace BeerXMLSharp
 {
     /// <summary>
     /// Exception thrown when attempting to serialize an invalid IBeerXMLEntity
