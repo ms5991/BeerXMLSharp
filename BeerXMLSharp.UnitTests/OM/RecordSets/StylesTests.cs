@@ -50,7 +50,7 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            Assert.IsTrue(styles.IsValid(ref errorCode, suppressTypeCheck: true));
+            Assert.IsTrue(styles.IsValidRecordSet(ref errorCode, suppressTypeCheck: true));
         }
 
         [TestMethod]
@@ -67,7 +67,7 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
             ValidationCode errorCode = ValidationCode.SUCCESS;
 
             // need to suppress the type check because moq uses a different type
-            styles.IsValid(ref errorCode, suppressTypeCheck: true);
+            styles.IsValidRecordSet(ref errorCode, suppressTypeCheck: true);
 
             Assert.AreEqual(ValidationCode.SUCCESS, errorCode);
         }
@@ -87,7 +87,7 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            Assert.IsFalse(styles.IsValid(ref errorCode, suppressTypeCheck: false));
+            Assert.IsFalse(styles.IsValidRecordSet(ref errorCode, suppressTypeCheck: false));
         }
 
         [TestMethod]
@@ -105,7 +105,7 @@ namespace BeerXMLSharp.UnitTests.OM.RecordSets
 
             // do not suppress type check. Since moq uses a different type anyway,
             // there is no need to test with a different IRecord type
-            styles.IsValid(ref errorCode, suppressTypeCheck: false);
+            styles.IsValidRecordSet(ref errorCode, suppressTypeCheck: false);
 
             Assert.AreEqual(ValidationCode.RECORD_SET_CONTAINS_INVALID_TYPE, errorCode);
         }

@@ -67,7 +67,7 @@ namespace BeerXMLSharp.OM.Records
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
         /// <returns></returns>
-        internal override bool ValidateConditionalProperties(ref ValidationCode errorCode)
+        protected override bool ValidateConditionalProperties(ref ValidationCode errorCode)
         {
             bool result = true;
             if (this.Type == MashStepType.Decoction &&

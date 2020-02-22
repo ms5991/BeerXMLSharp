@@ -93,7 +93,7 @@ namespace BeerXMLSharp.OM.Records
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
         /// <returns></returns>
-        internal override bool IsValidInternal(ref ValidationCode errorCode)
+        protected override bool IsValidRecord(ref ValidationCode errorCode)
         {
             bool result = true;
 

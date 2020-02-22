@@ -46,6 +46,28 @@ namespace BeerXMLSharp.OM
         /// <returns></returns>
         public virtual bool IsValid(ref ValidationCode errorCode)
         {
+            return RequiredPropertiesNonNull(ref errorCode);
+        }
+
+        internal bool RequiredPropertiesNonNull(ref ValidationCode errorCode)
+        {
+            IDictionary<string, BeerXMLProperty> typeProperties = BeerXMLProperty.GetBeerXMLPropertyList(this.GetType());
+
+            foreach (KeyValuePair<string, BeerXMLProperty> pair in typeProperties)
+            {
+                // if the property is a required property and it's type 
+                // can be null, make sure it's not null
+                if (pair.Value.Attribute.Requirement == PropertyRequirement.REQUIRED &&
+                    !pair.Value.Property.PropertyType.IsValueType)
+                {
+                    if (pair.Value.Property.GetValue(this) == null)
+                    {
+                        errorCode |= ValidationCode.MISSING_REQUIRED_PROPERTY;
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 

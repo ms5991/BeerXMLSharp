@@ -1,9 +1,12 @@
 ﻿using BeerXMLSharp.OM;
+using BeerXMLSharp.OM.RecordSets;
 using BeerXMLSharp.Serialization;
+using BeerXMLSharp.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BeerXMLSharp.UnitTests.OM

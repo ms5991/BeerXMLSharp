@@ -35,7 +35,7 @@ namespace BeerXMLSharp.OM.Records
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
         /// <returns></returns>
-        internal virtual bool IsValidInternal(ref ValidationCode errorCode)
+        protected virtual bool IsValidRecord(ref ValidationCode errorCode)
         {
             return true;
         }
@@ -45,7 +45,7 @@ namespace BeerXMLSharp.OM.Records
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
         /// <returns></returns>
-        internal virtual bool ValidateConditionalProperties(ref ValidationCode errorCode)
+        protected virtual bool ValidateConditionalProperties(ref ValidationCode errorCode)
         {
             return true;
         }
@@ -77,7 +77,8 @@ namespace BeerXMLSharp.OM.Records
         /// <returns></returns>
         public override bool IsValid(ref ValidationCode errorCode)
         {
-            return this.IsValidInternal(ref errorCode) && this.ValidateConditionalProperties(ref errorCode);
+            // do not use lazy evaluation
+            return this.IsValidRecord(ref errorCode) & this.ValidateConditionalProperties(ref errorCode) & base.IsValid(ref errorCode);
         }
     }
 }

@@ -117,7 +117,8 @@ namespace BeerXMLSharp.OM
         PRIMING_SUGAR_FOR_FORCED_CARBONATION    = 1 << 6,
         EFFICIENCY_REQUIRED_FOR_GRAINS          = 1 << 7,
         BOIL_VOLUME_REQUIRED_PARAMS_MISSING     = 1 << 8,
-        RECORD_SET_CONTAINS_INVALID_TYPE        = 1 << 9
+        RECORD_SET_CONTAINS_INVALID_TYPE        = 1 << 9,
+        MISSING_REQUIRED_PROPERTY               = 1 << 10
     }
 
 
