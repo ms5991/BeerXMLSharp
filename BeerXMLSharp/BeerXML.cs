@@ -33,6 +33,11 @@ namespace BeerXMLSharp
             }
         }
 
+        /// <summary>
+        /// Entry point for deserialization from a file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static IBeerXMLEntity Deserialize(string filePath)
         {
             return Serializer.Deserialize(filePath);

@@ -1,4 +1,5 @@
 ﻿using BeerXMLSharp.OM;
+using BeerXMLSharp.OM.Records;
 using BeerXMLSharp.OM.RecordSets;
 using BeerXMLSharp.Serialization;
 using BeerXMLSharp.Utilities;
@@ -43,6 +44,69 @@ namespace BeerXMLSharp.UnitTests.OM
             string serializedResult = entity.Object.GetBeerXML();
 
             serializer.Verify(s => s.Serialize(entity.Object));
+        }
+
+        [TestMethod]
+
+        public void Deserialized_MissingRequiredParam_IsValid_False()
+        {
+            string xml = $@"
+                <HOP>
+                    <VERSION>1</VERSION>
+                    <ALPHA>5.0</ALPHA>
+                    <AMOUNT>0.0638</AMOUNT>
+                    <USE>Dry Hop</USE>
+                    <TIME>60.0</TIME>
+                    <NOTES>Great all purpose UK hop for ales, stouts, porters</NOTES>
+                </HOP>";
+
+            Mock<IStreamFactory> streamFactory = new Mock<IStreamFactory>();
+
+            using (MemoryStream ms = CommonUtilities.GetTestXmlStream(xml))
+            {
+                streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
+
+                XDocumentBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
+
+                s.StreamFactory = streamFactory.Object;
+
+                Hop hop = (Hop)s.Deserialize(It.IsAny<string>());
+
+                Assert.IsFalse(hop.IsValid());
+            }
+        }
+
+        [TestMethod]
+
+        public void Deserialized_MissingRequiredParam_IsValid_False_ErrorCode()
+        {
+            string xml = $@"
+                <HOP>
+                    <VERSION>1</VERSION>
+                    <ALPHA>5.0</ALPHA>
+                    <AMOUNT>0.0638</AMOUNT>
+                    <USE>Dry Hop</USE>
+                    <TIME>60.0</TIME>
+                    <NOTES>Great all purpose UK hop for ales, stouts, porters</NOTES>
+                </HOP>";
+
+            Mock<IStreamFactory> streamFactory = new Mock<IStreamFactory>();
+
+            using (MemoryStream ms = CommonUtilities.GetTestXmlStream(xml))
+            {
+                streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
+
+                XDocumentBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
+
+                s.StreamFactory = streamFactory.Object;
+
+                Hop hop = (Hop)s.Deserialize(It.IsAny<string>());
+
+                ValidationCode errorCode = ValidationCode.SUCCESS;
+                hop.IsValid(ref errorCode);
+
+                Assert.AreEqual(ValidationCode.MISSING_REQUIRED_PROPERTY, errorCode);
+            }
         }
     }
 }
