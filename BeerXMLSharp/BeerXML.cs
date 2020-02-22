@@ -2,6 +2,7 @@
 using BeerXMLSharp.Serialization;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace BeerXMLSharp
@@ -41,6 +42,16 @@ namespace BeerXMLSharp
         public static IBeerXMLEntity Deserialize(string filePath)
         {
             return Serializer.Deserialize(filePath);
+        }
+
+        /// <summary>
+        /// Entry point for deserialization from a stream
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static IBeerXMLEntity Deserialize(Stream stream)
+        {
+            return Serializer.Deserialize(stream);
         }
     }
 }
