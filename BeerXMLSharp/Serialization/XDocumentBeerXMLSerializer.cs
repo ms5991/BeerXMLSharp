@@ -14,6 +14,24 @@ namespace BeerXMLSharp.Serialization
     /// </summary>
     internal class XDocumentBeerXMLSerializer : IBeerXMLSerializer
     {
+        private IStreamFactory _fileStreamFactory = null;
+        internal IStreamFactory StreamFactory
+        {
+            get
+            {
+                if (_fileStreamFactory == null)
+                {
+                    _fileStreamFactory = new FileStreamFactory();
+                }
+
+                return _fileStreamFactory;
+            }
+            set
+            {
+                _fileStreamFactory = value;
+            }
+        }
+
         #region Public methods
 
         /// <summary>
@@ -43,7 +61,7 @@ namespace BeerXMLSharp.Serialization
         {
             XDocument document = GetBeerXDocument(obj);
 
-            using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
+            using (Stream fs = this.StreamFactory.GetFileStream(filePath, FileMode.OpenOrCreate))
             {
                 document.Save(fs);
             }
@@ -75,7 +93,6 @@ namespace BeerXMLSharp.Serialization
         {
             // get the name of the child property
             string propertyName = element.Name.ToString();
-
 
             Type objectType = BeerXMLProperty.TryGetTypeByName(propertyName);
 
@@ -193,7 +210,7 @@ namespace BeerXMLSharp.Serialization
         {
             XDocument result = null;
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            using (Stream fs = this.StreamFactory.GetFileStream(filePath, FileMode.Open))
             {
                 result = XDocument.Load(fs);
             }

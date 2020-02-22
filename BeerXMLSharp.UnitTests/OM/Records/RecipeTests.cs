@@ -508,7 +508,7 @@ namespace BeerXMLSharp.UnitTests.OM.Records
 
             recipe.IsValid(ref errorCode);
 
-            Assert.AreEqual(ValidationCode.MISSING_MASH_STEP_FOR_NON_EXTRACT, errorCode);
+            Assert.AreEqual(ValidationCode.MISSING_MASH_STEP_FOR_NON_EXTRACT | ValidationCode.EFFICIENCY_REQUIRED_FOR_GRAINS, errorCode);
         }
 
         [TestMethod]

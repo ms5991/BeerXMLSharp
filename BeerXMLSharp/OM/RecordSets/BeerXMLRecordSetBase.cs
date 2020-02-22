@@ -52,7 +52,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <returns></returns>
         public override bool IsValid(ref ValidationCode errorCode)
         {
-            return IsValid(ref errorCode, suppressTypeCheck: false);
+            return IsValidRecordSet(ref errorCode, suppressTypeCheck: false) & base.IsValid(ref errorCode);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace BeerXMLSharp.OM.RecordSets
         /// <param name="errorCode"></param>
         /// <param name="suppressTypeCheck"></param>
         /// <returns></returns>
-        internal bool IsValid(ref ValidationCode errorCode, bool suppressTypeCheck)
+        internal bool IsValidRecordSet(ref ValidationCode errorCode, bool suppressTypeCheck)
         {
             bool result = true;
             foreach (IBeerXMLEntity child in _children)
