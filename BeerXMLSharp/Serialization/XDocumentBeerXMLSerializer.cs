@@ -59,12 +59,23 @@ namespace BeerXMLSharp.Serialization
         /// <param name="filePath"></param>
         public void Serialize(IBeerXMLEntity obj, string filePath)
         {
-            XDocument document = GetBeerXDocument(obj);
-
             using (Stream fs = this.StreamFactory.GetFileStream(filePath, FileMode.OpenOrCreate))
             {
-                document.Save(fs);
+                Serialize(obj, fs);
             }
+        }
+
+        /// <summary>
+        /// Serializes the specified IBeerXMLEntity to BeerXML and output
+        /// to the given stream.
+        /// </summary>
+        /// <param name="obj">The IBeerXMLEntity object.</param>
+        /// <param name="filePath"></param>
+        public void Serialize(IBeerXMLEntity obj, Stream stream)
+        {
+            XDocument document = GetBeerXDocument(obj);
+
+            document.Save(stream);
         }
 
         /// <summary>
@@ -75,7 +86,21 @@ namespace BeerXMLSharp.Serialization
         /// <returns></returns>
         public IBeerXMLEntity Deserialize(string filePath)
         {
-            XDocument document = GetXDocumentFromFile(filePath);
+            using (Stream fs = this.StreamFactory.GetFileStream(filePath, FileMode.Open))
+            {
+                return Deserialize(fs);
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the contents of the specified file path into
+        /// and IBeerXMLEntity object
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns></returns>
+        public IBeerXMLEntity Deserialize(Stream stream)
+        {
+            XDocument document = XDocument.Load(stream);
 
             return GetEntityFromElement(document.Root);
         }
@@ -199,23 +224,6 @@ namespace BeerXMLSharp.Serialization
 
             // convert to the target type
             return Convert.ChangeType(valueToConvert, typeToParse);
-        }
-
-        /// <summary>
-        /// Loads an XDocument from the given file
-        /// </summary>
-        /// <param name="filePath">The file path.</param>
-        /// <returns></returns>
-        private XDocument GetXDocumentFromFile(string filePath)
-        {
-            XDocument result = null;
-
-            using (Stream fs = this.StreamFactory.GetFileStream(filePath, FileMode.Open))
-            {
-                result = XDocument.Load(fs);
-            }
-
-            return result;
         }
 
         #endregion

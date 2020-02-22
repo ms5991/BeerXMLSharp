@@ -16,7 +16,7 @@ namespace BeerXMLSharp.UnitTests.Serialization
     public class XDocumentBeerXMLSerializerTests
     {
         [TestMethod]
-        public void DeserializeCorrectType_FullRecipe()
+        public void DeserializeCorrectType_FullRecipe_FileAPI()
         {
             Mock<IStreamFactory> streamFactory = new Mock<IStreamFactory>();
 
@@ -24,11 +24,22 @@ namespace BeerXMLSharp.UnitTests.Serialization
             {
                 streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
 
-                XDocumentBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
-
-                s.StreamFactory = streamFactory.Object;
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer() { StreamFactory = streamFactory.Object };
 
                 IBeerXMLEntity e = s.Deserialize(It.IsAny<string>());
+
+                Assert.AreEqual(typeof(Recipes), e.GetType());
+            }
+        }
+
+        [TestMethod]
+        public void DeserializeCorrectType_FullRecipe_StreamAPI()
+        {
+            using (MemoryStream ms = CommonUtilities.GetTestXmlStream(CommonUtilities.TEST_XML_DRY_STOUT))
+            {
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
+
+                IBeerXMLEntity e = s.Deserialize(ms);
 
                 Assert.AreEqual(typeof(Recipes), e.GetType());
             }
@@ -56,9 +67,7 @@ namespace BeerXMLSharp.UnitTests.Serialization
             {
                 streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
 
-                XDocumentBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
-
-                s.StreamFactory = streamFactory.Object;
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer() { StreamFactory = streamFactory.Object };
 
                 Hop hop = (Hop)s.Deserialize(It.IsAny<string>());
 
@@ -87,9 +96,7 @@ namespace BeerXMLSharp.UnitTests.Serialization
             {
                 streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
 
-                XDocumentBeerXMLSerializer s = new XDocumentBeerXMLSerializer();
-
-                s.StreamFactory = streamFactory.Object;
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer() { StreamFactory = streamFactory.Object };
 
                 Mash_Step step = (Mash_Step)s.Deserialize(It.IsAny<string>());
 
