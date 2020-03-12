@@ -69,6 +69,46 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_OG_Min { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_OG_Max { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_FG_Min { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_FG_Max { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Color_Min { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Color_Max { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string OG_Range { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string FG_Range { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string IBU_Range { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Carb_Range { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Color_Range { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string ABV_Range { get; set; }
+
+        #endregion
+
         internal Style()
         {
 

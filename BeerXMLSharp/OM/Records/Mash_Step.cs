@@ -37,6 +37,28 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Description { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Water_Grain_Ratio { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Decoction_Amt { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Infuse_Temp { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Step_Temp { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Infuse_Amt { get; set; }
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Mash_Step"/> class.
         /// </summary>

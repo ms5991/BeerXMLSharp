@@ -39,6 +39,13 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Amount { get; set; }
+
+        #endregion
+
         internal Water()
         {
 

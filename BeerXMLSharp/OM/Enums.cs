@@ -104,6 +104,13 @@ namespace BeerXMLSharp.OM
         All_Grain
     }
 
+    public enum IBUMethod
+    {
+        Rager,
+        Tinseth,
+        Garetz
+    }
+
     [Flags]
     public enum ValidationCode
     {
