@@ -154,19 +154,19 @@ namespace BeerXMLSharp.OM.Records
         public string Est_Color { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public double IBU { get; set; }
+        public double? IBU { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public IBUMethod IBU_Method { get; set; }
+        public IBUMethod? IBU_Method { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public double Est_Abv { get; set; }
+        public double? Est_Abv { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public double Abv { get; set; }
+        public double? Abv { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public double Actual_Efficiency { get; set; }
+        public double? Actual_Efficiency { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
         public string Calories { get; set; }

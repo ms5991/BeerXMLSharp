@@ -62,7 +62,7 @@ namespace BeerXMLSharp.OM.Records
         public string Display_Amount { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
-        public double Potential { get; set; }
+        public double? Potential { get; set; }
 
         [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
         public string Inventory { get; set; }
