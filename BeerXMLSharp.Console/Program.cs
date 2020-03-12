@@ -64,7 +64,7 @@ namespace BeerXMLSharp.ConsoleDisplay
 
         public static void Deserialize()
         {
-            string file = @"C:\Users\ms599\source\repos\BeerXMLSharp\BeerXMLSharp.Console\Examples\dryStout.xml";
+            string file = @"C:\Users\ms599\source\repos\BeerXMLSharp\BeerXMLSharp.Console\Examples\VanillaCreamAle.xml";
 
             IBeerXMLEntity entity = BeerXML.Deserialize(file);
 
