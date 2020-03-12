@@ -5,17 +5,20 @@
 This is a C# [BeerXML](http://www.beerxml.com/beerxml.htm) object model and library for serializing/deserializing XML of this format.  It can be used in any .NET application that requires representation of Homebrewing recipies that conform to the open standard.
 
 ## Usage
-Install the nuget package (TODO).
 
-Per the standard, every element in the BeerXML representation is either a "record" or a "record set".  As such, the object model defines several interfaces:
+### Installation
+
+Install the nuget package (TODO).
 
 ### Object model and Serialization
 
+Per the standard, every element in the BeerXML representation is either a "record" or a "record set".  As such, the object model defines several interfaces:
+
 1. `BeerXMLSharp.OM.IBeerXMLEntity`: this is the highest level interface representing any entity that is a BeerXML element.  It defines methods:
     1. `string GetBeerXML()`: this method returns a string which contains the BeerXML representation of the BeerXML entity.
-    2. 'void GetBeerXML(string filePath)': this method writes the BeerXML representing the BeerXML entity to a file at the given filePath.
-    3. 'void GetBeerXML(Stream stream)': this method writes the BeerXML representing the BeerXML entity to the given `Stream` object.
-    4. 'bool IsValid()': returns a `bool` indicating if the given BeerXML entity would result in a valid BeerXML representation per the BeerXML spec.
+    2. `void GetBeerXML(string filePath)`: this method writes the BeerXML representing the BeerXML entity to a file at the given filePath.
+    3. `void GetBeerXML(Stream stream)`: this method writes the BeerXML representing the BeerXML entity to the given `Stream` object.
+    4. `bool IsValid()`: returns a `bool` indicating if the given BeerXML entity would result in a valid BeerXML representation per the BeerXML spec.
     5. `bool IsValid(out ValidationCode errorCode)`: does the same as (4) with the addition of an `out` parameter that contains the error code, if the method returns `false`.
 2. `BeerXMLSharp.OM.IRecordSet`: this interface defines a "record set", which is a collection of records in the BeerXML spec.
     1. `void Add(IRecord child)`: adds the given `IRecord` to the record set.
@@ -58,5 +61,18 @@ The static class `BeerXMLSharp.BeerXML` defines two deserialization methods:
 1. `IBeerXMLEntity Deserialize(string filePath)`: deserializes an IBeerXMLEntity from the given file.
 2. `IBeerXMLEntity Deserialize(Stream stream)`: deserializes an IBeerXMLEntity from the given `Stream`.
 
+### BeerXML Exceptions
+
+#### `BeerXMLInvalidObjectException`
+
+This exception is thrown when attempting to serialize an `IBeerXMLEntity` for which any of the `IsValid()` methods would return `false`.
+
+#### `BeerXMLUnknownTypeTagException`
+
+This exception is thrown during deserialization if the input XML contains an unknown tag that cannot be parsed into an `IRecord` or `IRecordSet` supported by BeerXML.
+
+## Future
+
+Future support for BeerXML extensions (defined in the spec), BeerXML V2+ if they are ever finalized, and BeerJSON if it is more widely adopted.
 
 
