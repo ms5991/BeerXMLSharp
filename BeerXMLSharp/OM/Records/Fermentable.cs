@@ -56,6 +56,22 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Amount { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public double Potential { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Inventory { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Color { get; set; }
+
+        #endregion
+
         internal Fermentable()
         {
 

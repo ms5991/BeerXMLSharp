@@ -40,6 +40,22 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Grain_Temp { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Tun_Temp { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Sparge_Temp { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Tun_Weight { get; set; }
+
+        #endregion
+
         internal Mash()
         {
 

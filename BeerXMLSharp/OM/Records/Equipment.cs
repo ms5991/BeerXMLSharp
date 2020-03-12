@@ -81,6 +81,34 @@ namespace BeerXMLSharp.OM.Records
 
         #endregion
 
+        #region Extension properties
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Boil_Size { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Batch_Size { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Tun_Volume { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Tun_Weight { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Top_Up_Water { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Trub_Chiller_Loss { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Lauter_Deadspace { get; set; }
+
+        [BeerXMLInclude(PropertyRequirement.OPTIONAL, isExtension: true)]
+        public string Display_Top_Up_Kettle { get; set; }
+
+        #endregion
+
         internal Equipment() : base()
         {
 

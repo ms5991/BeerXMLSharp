@@ -4,6 +4,8 @@
 
 This is a C# [BeerXML](http://www.beerxml.com/beerxml.htm) object model and library for serializing/deserializing XML of this format.  It can be used in any .NET application that requires representation of Homebrewing recipies that conform to the open standard.
 
+For the time being, as BeerXML V2 is not fully spec'ed out, this library only supports BeerXML V1. This will change if V2 gains traction.
+
 ## Usage
 
 ### Installation
@@ -73,6 +75,6 @@ This exception is thrown during deserialization if the input XML contains an unk
 
 ## Future
 
-Future support for BeerXML extensions (defined in the spec), BeerXML V2+ if they are ever finalized, and BeerJSON if it is more widely adopted.
+BeerXML V2+ if they are ever finalized, and [BeerJSON](https://old.reddit.com/r/Homebrewing/comments/7ej733/bregrammers_lets_work_on_beerjson_beerxml_2/) if it is more widely adopted.
 
 
