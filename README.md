@@ -8,7 +8,7 @@ This is a C# [BeerXML](http://www.beerxml.com/beerxml.htm) object model and libr
 
 ### Installation
 
-Install the nuget package (TODO).
+Install the nuget package. In nuget, the package is called `BeerXMLSharp` and can be installed via the UI or `Install-Package BeerXMLSharp`.
 
 ### Object model and Serialization
 
