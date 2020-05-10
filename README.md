@@ -78,3 +78,5 @@ This exception is thrown during deserialization if the input XML contains an unk
 BeerXML V2+ if they are ever finalized, and [BeerJSON](https://old.reddit.com/r/Homebrewing/comments/7ej733/bregrammers_lets_work_on_beerjson_beerxml_2/) if it is more widely adopted.
 
 
+Fix
+
