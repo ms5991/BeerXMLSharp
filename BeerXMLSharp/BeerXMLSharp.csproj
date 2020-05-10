@@ -9,6 +9,8 @@
     <RepositoryUrl>https://github.com/ms5991/BeerXMLSharp</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>BeerXML,Homebrewing</PackageTags>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <PackageReleaseNotes>1.1: Add flag to allow serialization of invalid entites</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">

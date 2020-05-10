@@ -11,12 +11,6 @@ namespace BeerXMLSharp.Serialization
     /// </summary>
     internal interface IBeerXMLSerializer
     {
-        /// <summary>
-        /// Serializes the specified IBeerXMLEntity to BeerXML.
-        /// </summary>
-        /// <param name="obj">The IBeerXMLEntity object.</param>
-        /// <returns></returns>
-        string Serialize(IBeerXMLEntity obj);
 
         /// <summary>
         /// Serializes the specified IBeerXMLEntity to BeerXML and output
