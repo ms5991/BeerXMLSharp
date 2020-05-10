@@ -3,6 +3,8 @@ using BeerXMLSharp.OM.Records;
 using BeerXMLSharp.OM.RecordSets;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
 namespace BeerXMLSharp.ConsoleDisplay
 {
@@ -59,7 +61,11 @@ namespace BeerXMLSharp.ConsoleDisplay
 
             allR.Add(r);
 
-            Console.WriteLine(allR.GetBeerXML().ToString());
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ValidationCode errorCode = allR.GetBeerXML(ms);
+                Console.WriteLine(Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length));
+            }
         }
 
         public static void Deserialize()
@@ -68,7 +74,13 @@ namespace BeerXMLSharp.ConsoleDisplay
 
             IBeerXMLEntity entity = BeerXML.Deserialize(file);
 
-            Console.WriteLine(entity.GetBeerXML());
+            entity.AllowInvalidSerialization = true;
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ValidationCode errorCode = entity.GetBeerXML(ms);
+                Console.WriteLine(Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length));
+            }
 
         }
 

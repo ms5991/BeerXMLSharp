@@ -67,7 +67,7 @@ The static class `BeerXMLSharp.BeerXML` defines two deserialization methods:
 
 #### `BeerXMLInvalidObjectException`
 
-This exception is thrown when attempting to serialize an `IBeerXMLEntity` for which any of the `IsValid()` methods would return `false`.
+This exception is thrown when attempting to serialize an `IBeerXMLEntity` for which any of the `IsValid()` methods would return `false`. This exception can be bypassed by setting `AllowInvalidSerialization` to `true` on an object prior to calling `GetBeerXML()`. This may be desirable in certain cases including when parsing XML from an external source.
 
 #### `BeerXMLUnknownTypeTagException`
 

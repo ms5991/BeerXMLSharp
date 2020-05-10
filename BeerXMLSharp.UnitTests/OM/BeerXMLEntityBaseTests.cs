@@ -23,7 +23,10 @@ namespace BeerXMLSharp.UnitTests.OM
 
             entity.Setup(e => e.IsValid(ref It.Ref<ValidationCode>.IsAny)).Returns(false);
 
-            entity.Object.GetBeerXML();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ValidationCode errorCode = entity.Object.GetBeerXML(ms);
+            }
         }
 
         [TestMethod]
@@ -37,13 +40,16 @@ namespace BeerXMLSharp.UnitTests.OM
             Mock<IBeerXMLSerializer> serializer = new Mock<IBeerXMLSerializer>();
 
             string result = "result";
-            serializer.Setup(s => s.Serialize(It.IsAny<IBeerXMLEntity>())).Returns(result);
+           // serializer.Setup(s => s.Serialize(It.IsAny<IBeerXMLEntity>(), It.IsAny<Stream>())).Returns(result);
 
             entity.Object.Serializer = serializer.Object;
 
-            string serializedResult = entity.Object.GetBeerXML();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                ValidationCode errorCode = entity.Object.GetBeerXML(ms);
+                serializer.Verify(s => s.Serialize(entity.Object, ms));
+            }
 
-            serializer.Verify(s => s.Serialize(entity.Object));
         }
 
         [TestMethod]

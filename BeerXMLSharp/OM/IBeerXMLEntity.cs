@@ -12,22 +12,26 @@ namespace BeerXMLSharp.OM
     public interface IBeerXMLEntity
     {
         /// <summary>
-        /// Returns a string containing the BeerXML representing this instance
+        /// Indicates whether serialization methods should throw
+        /// an exception when IsValid would return false
         /// </summary>
-        /// <returns></returns>
-        string GetBeerXML();
+        bool AllowInvalidSerialization
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Outputs the BeerXML representing this instance to the given file
         /// </summary>
         /// <returns></returns>
-        void GetBeerXML(string filePath);
+        ValidationCode GetBeerXML(string filePath);
 
         /// <summary>
         /// Outputs the BeerXML representing this instance to the given stream
         /// </summary>
         /// <returns></returns>
-        void GetBeerXML(Stream stream);
+        ValidationCode GetBeerXML(Stream stream);
 
         /// <summary>
         /// Returns a bool indicating if this instance will produce valid BeerXML.

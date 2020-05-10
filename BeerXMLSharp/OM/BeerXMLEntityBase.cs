@@ -30,6 +30,16 @@ namespace BeerXMLSharp.OM
         }
 
         /// <summary>
+        /// Indicates whether serialization methods should throw
+        /// an exception when IsValid would return false
+        /// </summary>
+        public bool AllowInvalidSerialization
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Returns a bool indicating if this instance will produce valid BeerXML.
         /// </summary>
         /// <param name="errorCode">Reason for validation failure, if applicable</param>
@@ -82,32 +92,17 @@ namespace BeerXMLSharp.OM
         }
 
         /// <summary>
-        /// Returns a string containing the BeerXML representing this instance
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="BeerXMLInvalidObjectException"></exception>
-        public string GetBeerXML()
-        {
-            ValidationCode code = ValidationCode.SUCCESS;
-            if (this.IsValid(ref code))
-            {
-                return this.Serializer.Serialize(this);
-            }
-
-            throw new BeerXMLInvalidObjectException(code, string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()));
-        }
-
-        /// <summary>
         /// Outputs the BeerXML representing this instance to the given file
         /// </summary>
         /// <returns></returns>
         /// <exception cref="BeerXMLInvalidObjectException"></exception>
-        public void GetBeerXML(string filePath)
+        public ValidationCode GetBeerXML(string filePath)
         {
             ValidationCode code = ValidationCode.SUCCESS;
-            if (this.IsValid(ref code))
+            if (this.IsValid(ref code) || this.AllowInvalidSerialization)
             {
                 this.Serializer.Serialize(this, filePath);
+                return code;
             }
 
             throw new BeerXMLInvalidObjectException(code, string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()));
@@ -118,12 +113,14 @@ namespace BeerXMLSharp.OM
         /// </summary>
         /// <returns></returns
         /// <exception cref="BeerXMLInvalidObjectException"></exception>
-        public void GetBeerXML(Stream stream)
+        public ValidationCode GetBeerXML(Stream stream)
         {
             ValidationCode code = ValidationCode.SUCCESS;
-            if (this.IsValid(ref code))
+            if (this.IsValid(ref code) || this.AllowInvalidSerialization)
             {
                 this.Serializer.Serialize(this, stream);
+
+                return code;
             }
 
             throw new BeerXMLInvalidObjectException(code, string.Format("Validation failed for [{0}] with code [{1}]", this.ToString(), code.ToString()));

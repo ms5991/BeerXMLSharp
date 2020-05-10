@@ -35,23 +35,6 @@ namespace BeerXMLSharp.Serialization
         #region Public methods
 
         /// <summary>
-        /// Serializes the given IBeerXMLEntity object
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public string Serialize(IBeerXMLEntity obj)
-        {
-            XDocument document = GetBeerXDocument(obj);
-            StringBuilder builder = new StringBuilder();
-            using (TextWriter writer = new StringWriter(builder))
-            {
-                document.Save(writer);
-            }
-
-            return builder.ToString();
-        }
-
-        /// <summary>
         /// Serializes the specified IBeerXMLEntity to BeerXML and output
         /// to the given file.
         /// </summary>
