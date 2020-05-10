@@ -11,6 +11,8 @@
     <PackageTags>BeerXML,Homebrewing</PackageTags>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <PackageReleaseNotes>1.1: Add flag to allow serialization of invalid entites</PackageReleaseNotes>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
