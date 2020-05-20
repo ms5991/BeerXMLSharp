@@ -92,6 +92,7 @@ batch #10 is long gone.Finally retired and will be moving to Florida in 2 weeks.
   <YEAST_STARTER>true</YEAST_STARTER>
   <NO_CHILL_EXTRA_MINUTES></NO_CHILL_EXTRA_MINUTES>
   <FERMENTABLES>
+    <NONSTANDARD>NONSTANDARD</NONSTANDARD>
    <FERMENTABLE>
     <NAME>Pale 2-Row</NAME>
     <VERSION>1</VERSION>
@@ -100,7 +101,8 @@ batch #10 is long gone.Finally retired and will be moving to Florida in 2 weeks.
     <YIELD>80.43</YIELD>
     <COLOR>1.8</COLOR>
     <ADD_AFTER_BOIL>false</ADD_AFTER_BOIL>
-    <ORIGIN>American</ORIGIN>
+     <ORIGIN>American</ORIGIN>
+     <NONSTANDARD>NONSTANDARD</NONSTANDARD>
     <DIASTATIC_POWER>0</DIASTATIC_POWER>
    </FERMENTABLE>
    <FERMENTABLE>

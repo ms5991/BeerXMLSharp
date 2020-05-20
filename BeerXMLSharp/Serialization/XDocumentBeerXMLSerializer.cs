@@ -108,7 +108,7 @@ namespace BeerXMLSharp.Serialization
             // BeerXML type
             if (objectType == null)
             {
-                throw new BeerXMLUnknownTypeTagException(propertyName, string.Format("Tag with name [{0}] has no corresponding IBeerXMLEntity type!", propertyName));
+                return null;
             }
 
             // create the empty IBeerXMLEntity
@@ -122,7 +122,14 @@ namespace BeerXMLSharp.Serialization
 
                 foreach (XElement childElement in element.Elements())
                 {
-                    objAsRecordSet.Add(GetEntityFromElement(childElement) as IRecord);
+                    IRecord child = GetEntityFromElement(childElement) as IRecord;
+
+                    // could be null if it was an invalid tag.
+                    // Invalid tags are ignored
+                    if (child != null)
+                    {
+                        objAsRecordSet.Add(child);
+                    }
                 }
 
                 return objAsRecordSet;
@@ -162,7 +169,12 @@ namespace BeerXMLSharp.Serialization
             if (beerXMLProperty.IsIBeerXMLEntity)
             {
                 IBeerXMLEntity childEntity = this.GetEntityFromElement(currentXElement);
-                beerXMLProperty.Property.SetValue(entity, childEntity);
+
+                // could be null if it is an invalid tag
+                if (childEntity != null)
+                {
+                    beerXMLProperty.Property.SetValue(entity, childEntity);
+                }
             }
             else
             {

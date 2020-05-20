@@ -84,6 +84,11 @@ namespace BeerXMLSharp.ConsoleDisplay
 
         }
 
+        public static object Get()
+        {
+            return null;
+        }
+
         public static void Main(string[] args)
         {
             Deserialize();
