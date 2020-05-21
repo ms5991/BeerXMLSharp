@@ -58,10 +58,15 @@ The descriptions and property lists for all `IBeerXMLEntity`s can be found in th
 
 ### Deserialization
 
-The static class `BeerXMLSharp.BeerXML` defines two deserialization methods: 
+The static class `BeerXMLSharp.BeerXML` defines deserialization methods: 
 
 1. `IBeerXMLEntity Deserialize(string filePath)`: deserializes an IBeerXMLEntity from the given file.
 2. `IBeerXMLEntity Deserialize(Stream stream)`: deserializes an IBeerXMLEntity from the given `Stream`.
+
+Further, `BeerXMLSharp.BeerXML` exposes a configuration property called `StrictModeEnabled`, which is a `bool` indicating whether a `BeerXMLUnknownTypeTagException` should be thrown if a `Deserialize` method encounters a tag with an unknown type. Note that the default for this property is `false` per the spec. When set to `true`, technically the program will be non-compliant because the spec requires that unknown tags be ignored. This property can be set as follows:
+
+    BeerXML.StrictModeEnabled = true;
+    BeerXML.StrictModeEnabled = false;
 
 ### BeerXML Exceptions
 
@@ -71,7 +76,7 @@ This exception is thrown when attempting to serialize an `IBeerXMLEntity` for wh
 
 #### `BeerXMLUnknownTypeTagException`
 
-This exception is thrown during deserialization if the input XML contains an unknown tag that cannot be parsed into an `IRecord` or `IRecordSet` supported by BeerXML.
+If strict mode is enabled, this exception is thrown during deserialization if the input XML contains an unknown tag that cannot be parsed into an `IRecord` or `IRecordSet` supported by BeerXML.
 
 ## Future
 

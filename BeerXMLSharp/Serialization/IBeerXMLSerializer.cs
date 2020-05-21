@@ -11,6 +11,11 @@ namespace BeerXMLSharp.Serialization
     /// </summary>
     internal interface IBeerXMLSerializer
     {
+        /// <summary>
+        /// Indicates whether an exception should be thrown
+        /// if an invalid tag is encountered
+        /// </summary>
+        bool StrictModeEnabled { get; set; }
 
         /// <summary>
         /// Serializes the specified IBeerXMLEntity to BeerXML and output
