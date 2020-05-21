@@ -35,6 +35,15 @@ namespace BeerXMLSharp.Serialization
         #region Public methods
 
         /// <summary>
+        /// <inheritdoc/>
+        /// </summary>
+        public bool StrictModeEnabled
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Serializes the specified IBeerXMLEntity to BeerXML and output
         /// to the given file.
         /// </summary>
@@ -108,7 +117,12 @@ namespace BeerXMLSharp.Serialization
             // BeerXML type
             if (objectType == null)
             {
-                return null;
+                if (this.StrictModeEnabled)
+                {
+                    throw new BeerXMLUnknownTypeTagException(propertyName, string.Format("Tag with name [{0}] has no corresponding IBeerXMLEntity type!", propertyName));
+                }
+
+                return null; 
             }
 
             // create the empty IBeerXMLEntity

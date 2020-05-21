@@ -103,5 +103,66 @@ namespace BeerXMLSharp.UnitTests.Serialization
                 Assert.IsFalse(step.IsValid());
             }
         }
+
+        [TestMethod]
+        public void Deserialize_UnknownTagDoesNotThrow()
+        {
+            string xml = @"
+                <HOPS>
+                    <HOP>
+                        <NAME>Goldings, East Kent</NAME>
+                        <VERSION>1</VERSION>
+                        <ALPHA>5.0</ALPHA>
+                        <AMOUNT>0.0638</AMOUNT>
+                        <USE>Dry Hop</USE>
+                        <TIME>60.0</TIME>
+                        <NOTES>Great all purpose UK hop for ales, stouts, porters</NOTES>
+                    </HOP>
+                    <UNKNOWN_TAG>UNKNOWN TAG</UNKNOWN_TAG>
+                </HOPS>";
+
+            Mock<IStreamFactory> streamFactory = new Mock<IStreamFactory>();
+
+            using (MemoryStream ms = CommonUtilities.GetTestXmlStream(xml))
+            {
+                streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
+
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer() { StreamFactory = streamFactory.Object };
+
+                // test is successful if this does not throw
+                Hops step = (Hops)s.Deserialize(It.IsAny<string>());
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BeerXMLUnknownTypeTagException))]
+        public void Deserialize_UnknownTagThrowsWhenStrictModeEnabled()
+        {
+            string xml = @"
+                <HOPS>
+                    <HOP>
+                        <NAME>Goldings, East Kent</NAME>
+                        <VERSION>1</VERSION>
+                        <ALPHA>5.0</ALPHA>
+                        <AMOUNT>0.0638</AMOUNT>
+                        <USE>Dry Hop</USE>
+                        <TIME>60.0</TIME>
+                        <NOTES>Great all purpose UK hop for ales, stouts, porters</NOTES>
+                    </HOP>
+                    <UNKNOWN_TAG>UNKNOWN TAG</UNKNOWN_TAG>
+                </HOPS>";
+
+            Mock<IStreamFactory> streamFactory = new Mock<IStreamFactory>();
+
+            using (MemoryStream ms = CommonUtilities.GetTestXmlStream(xml))
+            {
+                streamFactory.Setup(f => f.GetFileStream(It.IsAny<string>(), It.IsAny<FileMode>())).Returns(ms);
+
+                IBeerXMLSerializer s = new XDocumentBeerXMLSerializer() { StreamFactory = streamFactory.Object, StrictModeEnabled = true };
+
+                // test is successful if this does not throw
+                Hops step = (Hops)s.Deserialize(It.IsAny<string>());
+            }
+        }
     }
 }

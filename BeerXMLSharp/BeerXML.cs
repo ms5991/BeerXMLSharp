@@ -35,6 +35,23 @@ namespace BeerXMLSharp
         }
 
         /// <summary>
+        /// Indicates whether StrictMode is enabled. If true,
+        /// an exception will be thrown when deserializing unknown
+        /// tags. If false (default), unknown tags are ignored
+        /// </summary>
+        public static bool StrictModeEnabled
+        {
+            get
+            {
+                return Serializer.StrictModeEnabled;
+            }
+            set
+            {
+                Serializer.StrictModeEnabled = value;
+            }
+        }
+
+        /// <summary>
         /// Entry point for deserialization from a file
         /// </summary>
         /// <param name="filePath"></param>
